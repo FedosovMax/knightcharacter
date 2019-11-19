@@ -5,4 +5,4 @@ services:
     restart: always
     image: maksymfedosov/knightexp:latest
     ports:
-      - "8070:8070"
+      - "6070:6070"
