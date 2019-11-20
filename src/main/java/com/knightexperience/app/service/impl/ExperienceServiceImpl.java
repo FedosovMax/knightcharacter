@@ -1,7 +1,7 @@
 package com.knightexperience.app.service.impl;
 
+import com.knightexperience.app.domain.TodoVO;
 import com.knightexperience.app.gateway.UserManagementGateway;
-import com.knightexperience.app.rest.request.TodoRequest;
 import com.knightexperience.app.service.ExperienceService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -13,26 +13,30 @@ public class ExperienceServiceImpl implements ExperienceService {
     private final UserManagementGateway userManagementGateway;
 
     @Override
-    public void calculateExperience(TodoRequest todoRequest) {
+    public void calculateExperience(TodoVO todoVO) {
 
-        int scarynessExp = getScarynessExperience(todoRequest);
-        int hardnessExp = getHardnessExperience(todoRequest);
+        int scarynessExp = getScarynessExperience(todoVO);
+        int hardnessExp = getHardnessExperience(todoVO);
 
         userManagementGateway.addExperience(scarynessExp + hardnessExp);
 
     }
 
-    private int getScarynessExperience(TodoRequest todoRequest) {
-        switch (todoRequest.getScaryness()){
-            case NOT_SCARY: return 1;
-            case SCARY: return 10;
-            case VERY_SCARY: return 50;
-            default: return 0;
+    private int getScarynessExperience(TodoVO todoVO) {
+        switch (todoVO.getScaryness()) {
+            case NOT_SCARY:
+                return 1;
+            case SCARY:
+                return 10;
+            case VERY_SCARY:
+                return 50;
+            default:
+                return 0;
         }
     }
 
-    private int getHardnessExperience(TodoRequest todoRequest) {
-        switch (todoRequest.getHardness()) {
+    private int getHardnessExperience(TodoVO todoVO) {
+        switch (todoVO.getHardness()) {
             case NOT_HARD:
                 return 1;
             case HARD:

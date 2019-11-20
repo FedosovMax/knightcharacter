@@ -1,8 +1,8 @@
 package com.knightexperience.app.service;
 
-import com.knightexperience.app.rest.request.TodoRequest;
+import com.knightexperience.app.domain.TodoVO;
 
 public interface ExperienceService {
 
-    void calculateExperience(TodoRequest todoRequest);
+    void calculateExperience(TodoVO todoVO);
 }
