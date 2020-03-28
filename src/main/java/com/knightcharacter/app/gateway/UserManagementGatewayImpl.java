@@ -1,4 +1,4 @@
-package com.knightexperience.app.gateway;
+package com.knightcharacter.app.gateway;
 
 import org.springframework.stereotype.Component;
 

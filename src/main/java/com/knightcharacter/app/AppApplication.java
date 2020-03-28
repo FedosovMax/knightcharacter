@@ -1,4 +1,4 @@
-package com.knightexperience.app;
+package com.knightcharacter.app;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
