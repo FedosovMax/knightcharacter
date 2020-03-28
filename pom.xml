@@ -8,8 +8,8 @@
 		<version>2.2.0.RELEASE</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.knightexperience</groupId>
-	<artifactId>knightexperience</artifactId>
+	<groupId>com.knightcharacter</groupId>
+	<artifactId>knightcharacter</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>app</name>
 	<description>Demo project for Spring Boot</description>

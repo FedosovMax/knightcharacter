@@ -1,4 +1,4 @@
-package com.knightexperience.app.domain;
+package com.knightcharacter.app.domain;
 
 public class ExperienceVO {
 

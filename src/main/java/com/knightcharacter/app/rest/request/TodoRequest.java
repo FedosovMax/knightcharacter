@@ -1,7 +1,8 @@
-package com.knightexperience.app.rest.request;
+package com.knightcharacter.app.rest.request;
 
-import com.knightexperience.app.domain.enums.Hardness;
-import com.knightexperience.app.domain.enums.Scaryness;
+import com.knightcharacter.app.domain.enums.Hardness;
+import com.knightcharacter.app.domain.enums.Scaryness;
+
 import javax.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

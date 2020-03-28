@@ -1,7 +1,7 @@
-package com.knightexperience.app.domain;
+package com.knightcharacter.app.domain;
 
-import com.knightexperience.app.domain.enums.Hardness;
-import com.knightexperience.app.domain.enums.Scaryness;
+import com.knightcharacter.app.domain.enums.Hardness;
+import com.knightcharacter.app.domain.enums.Scaryness;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
