@@ -34,7 +34,7 @@ import org.springframework.transaction.annotation.Transactional;
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-public class TodoBlockResourceIntegrationTest {
+public class CharacterResourceIntegrationTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -133,7 +133,7 @@ public class TodoBlockResourceIntegrationTest {
     }
 
     @Test
-    public void updateTodoBlock_shouldRespondWithBadRequestStatus_whenIdConsistsOfSpaces() throws Exception {
+    public void updateCharacter_shouldRespondWithBadRequestStatus_whenIdConsistsOfSpaces() throws Exception {
         Character character = characterRepository.save(CharacterFactory.createCharacterInstance());
         CharacterRequestDto requestDto = CharacterFactory.characterRequestDtoWithNameOfSpacesInstance();
 
@@ -145,7 +145,7 @@ public class TodoBlockResourceIntegrationTest {
 
     @Test
     @Transactional
-    public void deleteTodoBlock_shouldDeleteTodoBlock_whenIdIsCorrect() throws Exception {
+    public void deleteCharacter_shouldDeleteCharacter_whenIdIsCorrect() throws Exception {
         Character character = characterRepository.save(CharacterFactory.createCharacterInstance());
 
         mockMvc.perform(delete(buildDeleteCharacterByIdUrl(character.getId())))

@@ -33,7 +33,7 @@ public class CharacterResource {
     private final CharacterRestMapper characterRestMapper;
 
     @GetMapping
-    public ResponseEntity<List<CharacterResponseDto>> getAllTodoBlocks() {
+    public ResponseEntity<List<CharacterResponseDto>> getAllCharacters() {
         log.info("Rest request to get all characters");
 
         return ResponseEntity.status(HttpStatus.FOUND)
@@ -44,7 +44,7 @@ public class CharacterResource {
     }
 
     @PostMapping
-    public ResponseEntity<CharacterResponseDto> addTodoBlock(
+    public ResponseEntity<CharacterResponseDto> addCharacter(
         @Valid @RequestBody CharacterRequestDto createRequestDto) {
         log.info("Rest request to add character : {}", createRequestDto);
         CharacterVO characterVO = characterRestMapper.toCharacterVO(createRequestDto);
@@ -73,7 +73,7 @@ public class CharacterResource {
     }
 
     @DeleteMapping("/{characterId}")
-    public ResponseEntity<Void> deleteTodoBlock(@PathVariable String characterId) {
+    public ResponseEntity<Void> deleteCharacter(@PathVariable String characterId) {
         log.info("Rest request to delete character by id : {}", characterId);
         characterService.deleteById(characterId);
         return ResponseEntity.ok().build();
