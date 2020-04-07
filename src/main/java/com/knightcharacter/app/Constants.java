@@ -1,4 +1,4 @@
-package com.knightexperience.app;
+package com.knightcharacter.app;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;

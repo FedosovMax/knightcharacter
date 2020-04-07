@@ -1,9 +1,9 @@
-package com.knightexperience.app.service.impl;
+package com.knightcharacter.app.service.impl;
 
-import com.knightexperience.app.domain.CharacterVO;
-import com.knightexperience.app.exception.CharacterNotFoundException;
-import com.knightexperience.app.gateway.CharacterGateway;
-import com.knightexperience.app.service.CharacterService;
+import com.knightcharacter.app.domain.CharacterVO;
+import com.knightcharacter.app.exception.CharacterNotFoundException;
+import com.knightcharacter.app.gateway.CharacterGateway;
+import com.knightcharacter.app.service.CharacterService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

@@ -1,8 +1,5 @@
 package com.knightcharacter.app.rest.request;
 
-import com.knightcharacter.app.domain.enums.Hardness;
-import com.knightcharacter.app.domain.enums.Scaryness;
-
 import javax.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,18 +10,17 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class TodoRequest {
+public class ExperienceRequestDto {
 
     @NotBlank
-    private long id;
+    private String todoId;
 
     @NotBlank
-    private Long userId;
+    private String userId;
 
     @NotBlank
-    private Scaryness scaryness;
+    private String scariness;
 
     @NotBlank
-    private Hardness hardness;
-
+    private String hardness;
 }

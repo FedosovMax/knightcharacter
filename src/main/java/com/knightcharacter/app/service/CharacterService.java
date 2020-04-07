@@ -1,6 +1,6 @@
-package com.knightexperience.app.service;
+package com.knightcharacter.app.service;
 
-import com.knightexperience.app.domain.CharacterVO;
+import com.knightcharacter.app.domain.CharacterVO;
 import java.util.List;
 
 public interface CharacterService {

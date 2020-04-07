@@ -1,4 +1,4 @@
-package com.knightexperience.app.exception;
+package com.knightcharacter.app.exception;
 
 public class CharacterNotFoundException extends RuntimeException {
 

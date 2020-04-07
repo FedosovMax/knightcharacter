@@ -6,11 +6,11 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Builder
-public class CharacterResponseDto {
+public class ExperienceResponseDto {
 
-    private String id;
-    private String characterName;
+    private String todoId;
+    private Integer experience;
 }

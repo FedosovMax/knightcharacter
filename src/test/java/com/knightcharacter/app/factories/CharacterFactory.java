@@ -1,7 +1,7 @@
-package com.knightexperience.app.factories;
+package com.knightcharacter.app.factories;
 
-import com.knightexperience.app.gateway.privatedb.representation.Character;
-import com.knightexperience.app.rest.request.CharacterRequestDto;
+import com.knightcharacter.app.gateway.privatedb.representation.Character;
+import com.knightcharacter.app.rest.request.CharacterRequestDto;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 

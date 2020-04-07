@@ -1,8 +1,8 @@
-package com.knightexperience.app.rest.mappers;
+package com.knightcharacter.app.rest.mappers;
 
-import com.knightexperience.app.domain.CharacterVO;
-import com.knightexperience.app.rest.request.CharacterRequestDto;
-import com.knightexperience.app.rest.response.CharacterResponseDto;
+import com.knightcharacter.app.domain.CharacterVO;
+import com.knightcharacter.app.rest.request.CharacterRequestDto;
+import com.knightcharacter.app.rest.response.CharacterResponseDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 

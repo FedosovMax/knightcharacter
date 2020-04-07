@@ -1,8 +1,8 @@
 package com.knightcharacter.app.service;
 
-import com.knightcharacter.app.domain.TodoVO;
+import com.knightcharacter.app.domain.ExperienceVO;
 
 public interface ExperienceService {
 
-    void calculateExperience(TodoVO todoVO);
+    ExperienceVO calculateExperience(ExperienceVO experienceVO);
 }
