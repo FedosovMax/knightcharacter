@@ -1,4 +1,4 @@
-package com.knightexperience.app.gateway.privatedb.representation;
+package com.knightcharacter.app.gateway.privatedb.representation;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

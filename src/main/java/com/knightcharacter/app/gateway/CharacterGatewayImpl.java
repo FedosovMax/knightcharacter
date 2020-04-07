@@ -1,9 +1,9 @@
-package com.knightexperience.app.gateway;
+package com.knightcharacter.app.gateway;
 
-import com.knightexperience.app.domain.CharacterVO;
-import com.knightexperience.app.gateway.privatedb.mapper.CharacterMapper;
-import com.knightexperience.app.gateway.privatedb.repository.CharacterRepository;
-import com.knightexperience.app.gateway.privatedb.representation.Character;
+import com.knightcharacter.app.domain.CharacterVO;
+import com.knightcharacter.app.gateway.privatedb.mapper.CharacterMapper;
+import com.knightcharacter.app.gateway.privatedb.repository.CharacterRepository;
+import com.knightcharacter.app.gateway.privatedb.representation.Character;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;

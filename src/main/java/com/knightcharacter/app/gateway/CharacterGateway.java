@@ -1,6 +1,6 @@
-package com.knightexperience.app.gateway;
+package com.knightcharacter.app.gateway;
 
-import com.knightexperience.app.domain.CharacterVO;
+import com.knightcharacter.app.domain.CharacterVO;
 import java.util.List;
 import java.util.Optional;
 

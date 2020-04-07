@@ -1,12 +1,12 @@
-package com.knightexperience.app.rest;
+package com.knightcharacter.app.rest;
 
-import static com.knightexperience.app.Constants.BASE_CHARACTER;
+import static com.knightcharacter.app.Constants.BASE_CHARACTER;
 
-import com.knightexperience.app.domain.CharacterVO;
-import com.knightexperience.app.rest.mappers.CharacterRestMapper;
-import com.knightexperience.app.rest.request.CharacterRequestDto;
-import com.knightexperience.app.rest.response.CharacterResponseDto;
-import com.knightexperience.app.service.CharacterService;
+import com.knightcharacter.app.domain.CharacterVO;
+import com.knightcharacter.app.rest.mappers.CharacterRestMapper;
+import com.knightcharacter.app.rest.request.CharacterRequestDto;
+import com.knightcharacter.app.rest.response.CharacterResponseDto;
+import com.knightcharacter.app.service.CharacterService;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.validation.Valid;
@@ -37,9 +37,7 @@ public class CharacterResource {
         log.info("Rest request to get all characters");
 
         return ResponseEntity.status(HttpStatus.FOUND)
-            .body(characterService.findAll()
-                .stream()
-                .map(characterRestMapper::toCharacterResponseDto)
+            .body(characterService.findAll().stream().map(characterRestMapper::toCharacterResponseDto)
                 .collect(Collectors.toList()));
     }
 

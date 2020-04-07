@@ -1,6 +1,7 @@
-package com.knightexperience.app;
+package com.knightcharacter.app;
 
-import static com.knightexperience.app.Constants.BASE_CHARACTER;
+
+import static com.knightcharacter.app.Constants.BASE_CHARACTER;
 
 public class TestConstants {
 
@@ -8,6 +9,8 @@ public class TestConstants {
     public static final String PARAMETER_ID = "id";
     public static final String PARAMETER_LENGTH = "length()";
     public static final String PARAMETER_CHARACTER_NAME = "characterName";
+    public static final String PARAMETER_EXPERIENCE = "experience";
+    public static final String PARAMETER_TODOID = "todoId";
 
     public static String buildGetCharacterByIdUrl(String characterId) {
         return BASE_CHARACTER + "/" + characterId;

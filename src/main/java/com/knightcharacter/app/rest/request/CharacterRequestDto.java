@@ -1,4 +1,4 @@
-package com.knightexperience.app.rest.request;
+package com.knightcharacter.app.rest.request;
 
 import javax.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;

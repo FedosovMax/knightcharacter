@@ -1,7 +1,6 @@
 package com.knightcharacter.app.service.impl;
 
-import com.knightcharacter.app.domain.TodoVO;
-import com.knightcharacter.app.gateway.UserManagementGateway;
+import com.knightcharacter.app.domain.ExperienceVO;
 import com.knightcharacter.app.service.ExperienceService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -10,42 +9,40 @@ import org.springframework.stereotype.Service;
 @Service
 public class ExperienceServiceImpl implements ExperienceService {
 
-    private final UserManagementGateway userManagementGateway;
-
     @Override
-    public void calculateExperience(TodoVO todoVO) {
+    public ExperienceVO calculateExperience(ExperienceVO experienceVO) {
+        int scarynessExp = getScarinessExperience(experienceVO);
+        int hardnessExp = getHardnessExperience(experienceVO);
+        int experience = scarynessExp + hardnessExp;
 
-        int scarynessExp = getScarynessExperience(todoVO);
-        int hardnessExp = getHardnessExperience(todoVO);
-
-        userManagementGateway.addExperience(scarynessExp + hardnessExp);
-
+        experienceVO.setExperience(experience);
+        return experienceVO;
     }
 
-    private int getScarynessExperience(TodoVO todoVO) {
-        switch (todoVO.getScaryness()) {
-            case NOT_SCARY:
+    private int getScarinessExperience(ExperienceVO experienceVO) {
+        switch (experienceVO.getScariness()) {
+            case "NOT_SCARY":
                 return 1;
-            case SCARY:
+            case "SCARY":
                 return 10;
-            case VERY_SCARY:
+            case "VERY_SCARY":
                 return 50;
             default:
                 return 0;
         }
     }
 
-    private int getHardnessExperience(TodoVO todoVO) {
-        switch (todoVO.getHardness()) {
-            case NOT_HARD:
+    private int getHardnessExperience(ExperienceVO experienceVO) {
+        switch (experienceVO.getHardness()) {
+            case "NOT_HARD":
                 return 1;
-            case HARD:
+            case "HARD":
                 return 3;
-            case VERY_HARD:
+            case "VERY_HARD":
                 return 10;
-            case EXTRAORDINARY:
+            case "EXTRAORDINARY":
                 return 30;
-            case IMPOSSIBLE:
+            case "IMPOSSIBLE":
                 return 100;
             default:
                 return 0;

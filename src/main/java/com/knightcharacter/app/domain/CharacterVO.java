@@ -1,4 +1,4 @@
-package com.knightexperience.app.domain;
+package com.knightcharacter.app.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

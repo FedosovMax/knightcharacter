@@ -1,11 +1,23 @@
 package com.knightcharacter.app.domain;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class ExperienceVO {
 
-    private long id;
+    private String todoId;
 
-    private Long userId;
+    private String userId;
 
-    private int experience;
+    private Integer experience;
 
+    private String scariness;
+
+    private String hardness;
 }

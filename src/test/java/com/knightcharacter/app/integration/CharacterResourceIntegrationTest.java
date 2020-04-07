@@ -1,12 +1,12 @@
-package com.knightexperience.app.integration;
+package com.knightcharacter.app.integration;
 
-import static com.knightexperience.app.Constants.BASE_CHARACTER;
-import static com.knightexperience.app.TestConstants.buildDeleteCharacterByIdUrl;
-import static com.knightexperience.app.TestConstants.buildGetCharacterByIdUrl;
-import static com.knightexperience.app.TestConstants.buildJsonPathToCharacterName;
-import static com.knightexperience.app.TestConstants.buildJsonPathToId;
-import static com.knightexperience.app.TestConstants.buildJsonPathToLength;
-import static com.knightexperience.app.TestConstants.buildPutCharacterByIdUrl;
+import static com.knightcharacter.app.Constants.BASE_CHARACTER;
+import static com.knightcharacter.app.TestConstants.buildDeleteCharacterByIdUrl;
+import static com.knightcharacter.app.TestConstants.buildGetCharacterByIdUrl;
+import static com.knightcharacter.app.TestConstants.buildJsonPathToCharacterName;
+import static com.knightcharacter.app.TestConstants.buildJsonPathToId;
+import static com.knightcharacter.app.TestConstants.buildJsonPathToLength;
+import static com.knightcharacter.app.TestConstants.buildPutCharacterByIdUrl;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -16,10 +16,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.knightexperience.app.factories.CharacterFactory;
-import com.knightexperience.app.gateway.privatedb.repository.CharacterRepository;
-import com.knightexperience.app.gateway.privatedb.representation.Character;
-import com.knightexperience.app.rest.request.CharacterRequestDto;
+import com.knightcharacter.app.factories.CharacterFactory;
+import com.knightcharacter.app.gateway.privatedb.repository.CharacterRepository;
+import com.knightcharacter.app.gateway.privatedb.representation.Character;
+import com.knightcharacter.app.rest.request.CharacterRequestDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
