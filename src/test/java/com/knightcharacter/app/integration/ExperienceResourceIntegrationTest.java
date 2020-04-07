@@ -1,6 +1,7 @@
 package com.knightcharacter.app.integration;
 
 import static com.knightcharacter.app.Constants.BASE_EXPERIENCE_URL;
+import static com.knightcharacter.app.TestConstants.HARD_SCARRY_EXPERIENCE_AMOUNT;
 import static com.knightcharacter.app.TestConstants.PARAMETER_EXPERIENCE;
 import static com.knightcharacter.app.TestConstants.PARAMETER_TODOID;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -38,7 +39,7 @@ public class ExperienceResourceIntegrationTest {
             .content(objectMapper.writeValueAsString(requestDto))
             .contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(status().isOk())
-            .andExpect(jsonPath(PARAMETER_EXPERIENCE).value(13))
+            .andExpect(jsonPath(PARAMETER_EXPERIENCE).value(HARD_SCARRY_EXPERIENCE_AMOUNT))
             .andExpect(jsonPath(PARAMETER_TODOID).value(requestDto.getTodoId()));
     }
 
