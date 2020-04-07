@@ -12,7 +12,7 @@ public class TestConstants {
     public static final String PARAMETER_EXPERIENCE = "experience";
     public static final String PARAMETER_TODOID = "todoId";
 
-    public static final Integer HARD_SCARRY_EXPERIENCE_AMOUNT = 13;
+    public static final Integer HARD_SCARY_EXPERIENCE_AMOUNT = 13;
 
     public static String buildGetCharacterByIdUrl(String characterId) {
         return BASE_CHARACTER + "/" + characterId;
