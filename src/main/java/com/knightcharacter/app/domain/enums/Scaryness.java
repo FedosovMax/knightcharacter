@@ -1,4 +1,4 @@
-package com.knightexperience.app.domain.enums;
+package com.knightcharacter.app.domain.enums;
 
 import lombok.Getter;
 import lombok.ToString;

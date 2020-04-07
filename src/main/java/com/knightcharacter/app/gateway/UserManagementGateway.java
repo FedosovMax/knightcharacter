@@ -1,4 +1,4 @@
-package com.knightexperience.app.gateway;
+package com.knightcharacter.app.gateway;
 
 public interface UserManagementGateway {
     void addExperience(int experience);

@@ -7,8 +7,8 @@
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>2.2.5.RELEASE</version>
 	</parent>
-	<groupId>com.knightexperience</groupId>
-	<artifactId>knightexperience</artifactId>
+	<groupId>com.knightcharacter</groupId>
+	<artifactId>knightcharacter</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>app</name>
 	<description>knight-experience-app</description>
