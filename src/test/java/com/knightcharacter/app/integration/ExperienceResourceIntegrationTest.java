@@ -9,8 +9,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.knightcharacter.app.factories.CharacterFactory;
 import com.knightcharacter.app.factories.ExperienceFactory;
+import com.knightcharacter.app.gateway.privatedb.repository.CharacterRepository;
 import com.knightcharacter.app.rest.request.ExperienceRequestDto;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,8 +34,17 @@ public class ExperienceResourceIntegrationTest {
     @Autowired
     private ObjectMapper objectMapper;
 
+    @Autowired
+    private CharacterRepository characterRepository;
+
+    @AfterEach
+    public void tearDown() {
+        characterRepository.deleteAll();
+    }
+
     @Test
     public void calculateExperience_shouldCalculateExpAndReturnCalculatedExp_whenRequestIsCorrect() throws Exception {
+        characterRepository.save(CharacterFactory.createCharacterInstance());
         ExperienceRequestDto requestDto = ExperienceFactory.experienceRequestDtoInstance();
 
         mockMvc.perform(post(BASE_EXPERIENCE_URL)

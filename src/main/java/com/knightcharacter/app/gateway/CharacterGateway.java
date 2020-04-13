@@ -12,5 +12,7 @@ public interface CharacterGateway {
 
     Optional<CharacterVO> findById(String characterId);
 
+    Optional<CharacterVO> findByUserId(String userId);
+
     void deleteById(String characterId);
 }

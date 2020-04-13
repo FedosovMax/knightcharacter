@@ -14,4 +14,6 @@ public class CharacterVO {
     private String id;
 
     private String name;
+
+    private long experience;
 }

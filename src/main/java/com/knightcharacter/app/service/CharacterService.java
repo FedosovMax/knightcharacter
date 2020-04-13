@@ -13,5 +13,7 @@ public interface CharacterService {
 
     CharacterVO updateCharacter(CharacterVO changedCharacterVO, String characterId);
 
+    void addExperience(long experience, String characterId);
+
     void deleteById(String characterId);
 }
