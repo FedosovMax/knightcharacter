@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 public class CharacterFactory {
 
     public static final String CHARACTER_NAME = "Write integration tests";
+    public static final String CHARACTER_USER_ID = "user_id";
 
     public static CharacterRequestDto characterRequestDtoInstance() {
         return CharacterRequestDto.builder().characterName(CHARACTER_NAME).build();
@@ -23,6 +24,6 @@ public class CharacterFactory {
     }
 
     public static Character createCharacterInstance() {
-        return Character.builder().name(CHARACTER_NAME).build();
+        return Character.builder().name(CHARACTER_NAME).userId(CHARACTER_USER_ID).build();
     }
 }
