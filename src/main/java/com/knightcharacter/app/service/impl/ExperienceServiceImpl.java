@@ -1,6 +1,7 @@
 package com.knightcharacter.app.service.impl;
 
 import com.knightcharacter.app.domain.ExperienceVO;
+import com.knightcharacter.app.service.CharacterService;
 import com.knightcharacter.app.service.ExperienceService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -9,12 +10,15 @@ import org.springframework.stereotype.Service;
 @Service
 public class ExperienceServiceImpl implements ExperienceService {
 
+    private final CharacterService characterService;
+
     @Override
     public ExperienceVO calculateExperience(ExperienceVO experienceVO) {
         int scarynessExp = getScarinessExperience(experienceVO);
         int hardnessExp = getHardnessExperience(experienceVO);
         int experience = scarynessExp + hardnessExp;
 
+        characterService.addExperience(experience, experienceVO.getUserId());
         experienceVO.setExperience(experience);
         return experienceVO;
     }

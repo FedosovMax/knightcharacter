@@ -19,7 +19,9 @@ public class CharacterGatewayImpl implements CharacterGateway {
 
     @Override
     public CharacterVO save(CharacterVO characterVO) {
-        Character savedCharacter = characterRepository.save(characterMapper.toCharacter(characterVO));
+        Character character = characterMapper.toCharacter(characterVO);
+        character.setUserId("user_id");
+        Character savedCharacter = characterRepository.save(character);
         return characterMapper.toCharacterVO(savedCharacter);
     }
 
@@ -31,6 +33,11 @@ public class CharacterGatewayImpl implements CharacterGateway {
     @Override
     public Optional<CharacterVO> findById(String characterId) {
         return characterRepository.findById(characterId).map(characterMapper::toCharacterVO);
+    }
+
+    @Override
+    public Optional<CharacterVO> findByUserId(String userId) {
+        return characterRepository.findByUserId(userId).map(characterMapper::toCharacterVO);
     }
 
     @Override

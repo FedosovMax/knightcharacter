@@ -28,7 +28,7 @@ public class CharacterServiceImpl implements CharacterService {
     public CharacterVO findById(String characterId) {
         return characterGateway.findById(characterId)
             .orElseThrow(() -> new CharacterNotFoundException(
-                String.format("Character with such id:%s can't be " + "found", characterId)));
+                String.format("Character with such id:%s can't be found", characterId)));
     }
 
     @Override
@@ -36,6 +36,15 @@ public class CharacterServiceImpl implements CharacterService {
         CharacterVO characterVO = findById(characterId);
         characterVO.setName(changedCharacterVO.getName());
         return characterGateway.save(characterVO);
+    }
+
+    @Override
+    public void addExperience(long experience, String userId) {
+        CharacterVO characterVO = characterGateway.findByUserId(userId)
+            .orElseThrow(() -> new CharacterNotFoundException(
+                String.format("Character with such user id:%s can't be found", userId)));
+        characterVO.setExperience(characterVO.getExperience() + experience);
+        characterGateway.save(characterVO);
     }
 
     @Override

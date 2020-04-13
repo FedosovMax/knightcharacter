@@ -29,4 +29,8 @@ public class Character {
 
     @Column(name = "name")
     private String name;
+
+    private long experience;
+
+    private String userId;
 }
