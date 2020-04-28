@@ -1,7 +1,11 @@
 package com.knightcharacter.app.gateway.privatedb.representation;
 
+import com.knightcharacter.app.gateway.privatedb.representation.enums.Rarity;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -15,12 +19,12 @@ import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
-@Table(name = "character")
+@Table(name = "bonus")
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Character {
+public class Bonus {
 
     @Id
     @GeneratedValue(generator = "uuid")
@@ -29,10 +33,20 @@ public class Character {
     @Column(name = "id")
     private String id;
 
-    @Column(name = "name")
     private String name;
 
-    private long experience;
+    @Enumerated(EnumType.STRING)
+    private Rarity rarity;
 
-    private String userId;
+    @Column(name = "damage_boost")
+    private Integer damageBoost;
+
+    @Column(name = "crit_chance_boost")
+    private Integer critChanceBoost;
+
+    @Column(name = "crit_damage_boost")
+    private Integer critDamageBoost;
+
+    @Column(name = "skill_boost")
+    private Integer skillBoost;
 }

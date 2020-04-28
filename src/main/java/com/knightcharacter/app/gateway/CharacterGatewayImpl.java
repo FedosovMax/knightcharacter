@@ -4,14 +4,17 @@ import com.knightcharacter.app.domain.CharacterVO;
 import com.knightcharacter.app.gateway.privatedb.mapper.CharacterMapper;
 import com.knightcharacter.app.gateway.privatedb.repository.CharacterRepository;
 import com.knightcharacter.app.gateway.privatedb.representation.Character;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
+
+import org.springframework.stereotype.Component;
 
 @RequiredArgsConstructor
-@Service
+@Component
 public class CharacterGatewayImpl implements CharacterGateway {
 
     private final CharacterRepository characterRepository;
