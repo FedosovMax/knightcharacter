@@ -4,26 +4,27 @@ import static com.knightcharacter.app.Constants.BASE_EXPERIENCE_URL;
 import static com.knightcharacter.app.TestConstants.HARD_SCARY_EXPERIENCE_AMOUNT;
 import static com.knightcharacter.app.TestConstants.PARAMETER_EXPERIENCE;
 import static com.knightcharacter.app.TestConstants.PARAMETER_TODOID;
+
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 import com.knightcharacter.app.factories.CharacterFactory;
 import com.knightcharacter.app.factories.ExperienceFactory;
 import com.knightcharacter.app.gateway.privatedb.repository.CharacterRepository;
 import com.knightcharacter.app.rest.request.ExperienceRequestDto;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
-@ExtendWith(SpringExtension.class)
 @SpringBootTest
 @AutoConfigureMockMvc
 public class ExperienceResourceIntegrationTest {

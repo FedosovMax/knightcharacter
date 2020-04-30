@@ -2,6 +2,7 @@ package com.knightcharacter.app.factories;
 
 import com.knightcharacter.app.gateway.privatedb.representation.Character;
 import com.knightcharacter.app.rest.request.CharacterRequestDto;
+
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
