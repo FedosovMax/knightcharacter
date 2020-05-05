@@ -45,5 +45,5 @@ public class Skill {
         joinColumns = {@JoinColumn(name = "skill_id")},
         inverseJoinColumns = {@JoinColumn(name = "bonus_id")}
     )
-    List<Bonus> bonuses = new ArrayList<>();
+    private List<Bonus> bonuses = new ArrayList<>();
 }
