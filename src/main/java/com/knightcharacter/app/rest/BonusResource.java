@@ -66,8 +66,8 @@ public class BonusResource {
         @Valid @RequestBody BonusRequestDto requestDto) {
         log.info("Request to update bonus : {}", requestDto);
         BonusVO bonusVO = bonusRestMapper.toBonusVO(requestDto);
-        BonusVO updatedBonuVO = bonusService.updateBonus(bonusId, bonusVO);
-        return ResponseEntity.ok().body(bonusRestMapper.toBonusResponseDto(updatedBonuVO));
+        BonusVO updatedBonusVO = bonusService.updateBonus(bonusId, bonusVO);
+        return ResponseEntity.ok().body(bonusRestMapper.toBonusResponseDto(updatedBonusVO));
     }
 
     @DeleteMapping("/{bonusId}")
