@@ -17,6 +17,8 @@ public class TestConstants {
     public static final String PARAMETER_CHARACTER_NAME = "characterName";
     public static final String PARAMETER_EXPERIENCE = "experience";
     public static final String PARAMETER_TODOID = "todoId";
+    public static final String PARAMETER_DESCRIPTION = "description";
+    public static final String PARAMETER_BONUSES = "bonuses";
 
     public static final Integer HARD_SCARY_EXPERIENCE_AMOUNT = 13;
 
@@ -106,5 +108,41 @@ public class TestConstants {
 
     public static String buildJsonPathToSkillBoostInListByIndex(int index) {
         return JSON_ROOT + "[" + index + "]." + PARAMETER_SKILL_BOOST;
+    }
+
+    public static String buildJsonPathToDescription() {
+        return JSON_ROOT + PARAMETER_DESCRIPTION;
+    }
+
+    public static String buildJsonPathToBonuses() {
+        return JSON_ROOT + PARAMETER_BONUSES;
+    }
+
+    public static String buildJsonPathToIdInBonusListByIndex(int index) {
+        return JSON_ROOT + PARAMETER_BONUSES + "[" + index + "]." + PARAMETER_ID;
+    }
+
+    public static String buildJsonPathToNameInBonusListByIndex(int index) {
+        return JSON_ROOT + PARAMETER_BONUSES + "[" + index + "]." + PARAMETER_NAME;
+    }
+
+    public static String buildJsonPathToRarityInBonusListByIndex(int index) {
+        return JSON_ROOT + PARAMETER_BONUSES + "[" + index + "]." + PARAMETER_RARITY;
+    }
+
+    public static String buildJsonPathToDamageBoostInBonusListByIndex(int index) {
+        return JSON_ROOT + PARAMETER_BONUSES + "[" + index + "]." + PARAMETER_DAMAGE_BOOST;
+    }
+
+    public static String buildJsonPathToCritChanceBoostInBonusListByIndex(int index) {
+        return JSON_ROOT + PARAMETER_BONUSES + "[" + index + "]." + PARAMETER_CRIT_CHANCE_BOOST;
+    }
+
+    public static String buildJsonPathToCritDamageBoostInBonusListByIndex(int index) {
+        return JSON_ROOT + PARAMETER_BONUSES + "[" + index + "]." + PARAMETER_CRIT_DAMAGE_BOOST;
+    }
+
+    public static String buildJsonPathToSkillBoostInBonusListByIndex(int index) {
+        return JSON_ROOT + PARAMETER_BONUSES + "[" + index + "]." + PARAMETER_SKILL_BOOST;
     }
 }
