@@ -23,16 +23,16 @@ public class SkillServiceImpl implements SkillService {
 
     @Override
     public SkillVO save(SkillVO skillVO) {
-        skillVO.setBonuses(fetchBonusesByIds(extractBonusIds(skillVO)));
+        skillVO.setBonuses(fetchBonusesForSkill(skillVO));
         return skillGateway.save(skillVO);
     }
 
-    private List<BonusVO> fetchBonusesByIds(List<String> bonusIds) {
-        return bonusIds.stream().map(bonusService::findById).collect(Collectors.toList());
-    }
-
-    private List<String> extractBonusIds(SkillVO skillVO) {
-        return skillVO.getBonuses().stream().map(BonusVO::getId).collect(Collectors.toList());
+    private List<BonusVO> fetchBonusesForSkill(SkillVO skillVO) {
+        return skillVO.getBonuses()
+            .stream()
+            .map(BonusVO::getId)
+            .map(bonusService::findById)
+            .collect(Collectors.toList());
     }
 
     @Override
@@ -52,7 +52,7 @@ public class SkillServiceImpl implements SkillService {
 
         skillVO.setName(changedSkillVO.getName());
         skillVO.setDescription(changedSkillVO.getDescription());
-        skillVO.setBonuses(fetchBonusesByIds(extractBonusIds(changedSkillVO)));
+        skillVO.setBonuses(fetchBonusesForSkill(changedSkillVO));
 
         return skillGateway.save(skillVO);
     }

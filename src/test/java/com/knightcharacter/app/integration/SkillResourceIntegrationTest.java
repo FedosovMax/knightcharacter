@@ -84,7 +84,7 @@ class SkillResourceIntegrationTest {
 
     @Test
     @Transactional
-    void addSkill_shouldAddSkillAndReturnIt_whenRequestIsCorrect() throws Exception {
+    void addSkill_shouldAddSkillAndReturnSkillResponseDto_whenRequestIsCorrect() throws Exception {
         Bonus bonus = bonusRepository.save(BonusFactory.bonusInstance());
         SkillRequestDto requestDto = SkillFactory.createSkillRequestDto(List.of(bonus.getId()));
 
@@ -178,7 +178,7 @@ class SkillResourceIntegrationTest {
     }
 
     @Test
-    void getAllSkills_shouldReturnAllSkills() throws Exception {
+    void getAllSkills_shouldReturnAllSkillResponseDtos() throws Exception {
         Bonus bonus = bonusRepository.save(BonusFactory.bonusInstance());
         Skill firstSkill = skillRepository.save(SkillFactory.skillInstance(List.of(bonus)));
         Skill secondSkill = skillRepository.save(SkillFactory.skillInstance(List.of(bonus)));
@@ -221,7 +221,7 @@ class SkillResourceIntegrationTest {
     }
 
     @Test
-    void getSkillById_shouldReturnExistingSkill_whenIdIsCorrect() throws Exception {
+    void getSkillById_shouldReturnSkillResponseDto_whenIdIsCorrect() throws Exception {
         Bonus bonus = bonusRepository.save(BonusFactory.bonusInstance());
         Skill skill = skillRepository.save(SkillFactory.skillInstance(List.of(bonus)));
 
@@ -241,7 +241,7 @@ class SkillResourceIntegrationTest {
     }
 
     @Test
-    void updateSkill_shouldUpdateSkillAndReturnIt_whenRequestIsCorrect() throws Exception {
+    void updateSkill_shouldUpdateSkillAndReturnSkillResponseDto_whenRequestIsCorrect() throws Exception {
         Bonus firstBonus = bonusRepository.save(BonusFactory.bonusInstance());
         Bonus secondBonus = bonusRepository.save(BonusFactory.bonusInstance());
         Skill skill = skillRepository.save(SkillFactory.skillInstance(List.of(firstBonus)));
