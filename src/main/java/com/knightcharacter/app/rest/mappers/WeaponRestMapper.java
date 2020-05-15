@@ -7,7 +7,7 @@ import com.knightcharacter.app.rest.response.WeaponResponseDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = BonusRestMapper.class)
 public interface WeaponRestMapper {
 
     @Mapping(target = "bonuses", source = "bonusIds")

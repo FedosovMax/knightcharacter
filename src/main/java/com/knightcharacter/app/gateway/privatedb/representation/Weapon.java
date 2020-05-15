@@ -3,9 +3,11 @@ package com.knightcharacter.app.gateway.privatedb.representation;
 import com.knightcharacter.app.gateway.privatedb.representation.enums.WeaponType;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 
+import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -13,6 +15,8 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
+@Entity
+@Table(name = "weapon")
 @Data
 @SuperBuilder
 @ToString(callSuper = true)

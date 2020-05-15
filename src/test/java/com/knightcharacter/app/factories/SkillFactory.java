@@ -7,6 +7,10 @@ import com.knightcharacter.app.rest.request.SkillRequestDto;
 import java.util.Collections;
 import java.util.List;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class SkillFactory {
 
     private static final String SKILL_NAME = "Some super skill";

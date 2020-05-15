@@ -20,6 +20,12 @@ public class TestConstants {
     public static final String PARAMETER_TODOID = "todoId";
     public static final String PARAMETER_DESCRIPTION = "description";
     public static final String PARAMETER_BONUSES = "bonuses";
+    public static final String PARAMETER_DAMAGE = "damage";
+    public static final String PARAMETER_WEAPON_TYPE = "weaponType";
+    public static final String PARAMETER_REQUIRED_AGILITY = "requiredAgility";
+    public static final String PARAMETER_REQUIRED_INTELLIGENCE = "requiredIntelligence";
+    public static final String PARAMETER_REQUIRED_LEVEL = "requiredLevel";
+    public static final String PARAMETER_REQUIRED_STRENGTH = "requiredStrength";
 
     public static final Integer HARD_SCARY_EXPERIENCE_AMOUNT = 13;
 
@@ -205,5 +211,29 @@ public class TestConstants {
         int bonusIndex) {
         return JSON_ROOT + "[" + skillIndex + "]." + PARAMETER_BONUSES + "[" + bonusIndex + "]."
             + PARAMETER_SKILL_BOOST;
+    }
+
+    public static String buildJsonPathToDamage() {
+        return JSON_ROOT + PARAMETER_DAMAGE;
+    }
+
+    public static String buildJsonPathToWeaponType() {
+        return JSON_ROOT + PARAMETER_WEAPON_TYPE;
+    }
+
+    public static String buildJsonPathToRequiredAgility() {
+        return JSON_ROOT + PARAMETER_REQUIRED_AGILITY;
+    }
+
+    public static String buildJsonPathToRequiredIntelligence() {
+        return JSON_ROOT + PARAMETER_REQUIRED_INTELLIGENCE;
+    }
+
+    public static String buildJsonPathToRequiredLevel() {
+        return JSON_ROOT + PARAMETER_REQUIRED_LEVEL;
+    }
+
+    public static String buildJsonPathToRequiredStrength() {
+        return JSON_ROOT + PARAMETER_REQUIRED_STRENGTH;
     }
 }
