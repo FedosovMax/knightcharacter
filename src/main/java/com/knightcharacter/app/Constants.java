@@ -12,5 +12,9 @@ public class Constants {
 
     public static final String API_BASE_SKILLS = "/skills";
 
+    public static final String API_BASE_ITEMS = "/items";
+
+    public static final String API_BASE_WEAPONS = "/weapons";
+
     public static final String BASE_EXPERIENCE_URL = "/experience";
 }
