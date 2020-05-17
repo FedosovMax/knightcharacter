@@ -1,5 +1,7 @@
 package com.knightcharacter.app.factories;
 
+import com.knightcharacter.app.gateway.privatedb.representation.Bonus;
+import com.knightcharacter.app.gateway.privatedb.representation.Weapon;
 import com.knightcharacter.app.gateway.privatedb.representation.enums.Rarity;
 import com.knightcharacter.app.gateway.privatedb.representation.enums.WeaponType;
 import com.knightcharacter.app.rest.request.WeaponRequestDto;
@@ -150,6 +152,19 @@ public class WeaponFactory {
             .damage(WEAPON_DAMAGE)
             .weaponType(WEAPON_TYPE.name())
             .rarity(WEAPON_RARITY.name())
+            .requiredAgility(WEAPON_REQUIRED_AGILITY)
+            .requiredIntelligence(WEAPON_REQUIRED_INTELLIGENCE)
+            .requiredLevel(WEAPON_REQUIRED_LEVEL)
+            .requiredStrength(WEAPON_REQUIRED_STRENGTH)
+            .build();
+    }
+
+    public static Weapon weaponInstance(List<Bonus> bonuses) {
+        return Weapon.builder()
+            .damage(WEAPON_DAMAGE)
+            .bonuses(bonuses)
+            .weaponType(WEAPON_TYPE)
+            .rarity(WEAPON_RARITY)
             .requiredAgility(WEAPON_REQUIRED_AGILITY)
             .requiredIntelligence(WEAPON_REQUIRED_INTELLIGENCE)
             .requiredLevel(WEAPON_REQUIRED_LEVEL)

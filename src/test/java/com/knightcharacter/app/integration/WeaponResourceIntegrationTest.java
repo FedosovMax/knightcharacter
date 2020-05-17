@@ -2,25 +2,45 @@ package com.knightcharacter.app.integration;
 
 import static com.knightcharacter.app.Constants.API_BASE_ITEMS;
 import static com.knightcharacter.app.Constants.API_BASE_WEAPONS;
+import static com.knightcharacter.app.TestConstants.buildGetWeaponByIdUrl;
 import static com.knightcharacter.app.TestConstants.buildJsonPathToBonuses;
+import static com.knightcharacter.app.TestConstants.buildJsonPathToBonusesInListByIndex;
+import static com.knightcharacter.app.TestConstants.buildJsonPathToBonusesLength;
 import static com.knightcharacter.app.TestConstants.buildJsonPathToCritChanceBoostInBonusListByIndex;
+import static com.knightcharacter.app.TestConstants.buildJsonPathToCritChanceBoostInBonusListNestedInSkillListByIndexes;
 import static com.knightcharacter.app.TestConstants.buildJsonPathToCritDamageBoostInBonusListByIndex;
+import static com.knightcharacter.app.TestConstants.buildJsonPathToCritDamageBoostInBonusListNestedInSkillListByIndexes;
 import static com.knightcharacter.app.TestConstants.buildJsonPathToDamage;
 import static com.knightcharacter.app.TestConstants.buildJsonPathToDamageBoostInBonusListByIndex;
+import static com.knightcharacter.app.TestConstants.buildJsonPathToDamageBoostInBonusListNestedInSkillListByIndexes;
+import static com.knightcharacter.app.TestConstants.buildJsonPathToDamageInListByIndex;
 import static com.knightcharacter.app.TestConstants.buildJsonPathToId;
 import static com.knightcharacter.app.TestConstants.buildJsonPathToIdInBonusListByIndex;
+import static com.knightcharacter.app.TestConstants.buildJsonPathToIdInBonusListNestedInSkillListByIndexes;
+import static com.knightcharacter.app.TestConstants.buildJsonPathToIdInListByIndex;
+import static com.knightcharacter.app.TestConstants.buildJsonPathToLength;
 import static com.knightcharacter.app.TestConstants.buildJsonPathToNameInBonusListByIndex;
+import static com.knightcharacter.app.TestConstants.buildJsonPathToNameInBonusListNestedInSkillListByIndexes;
 import static com.knightcharacter.app.TestConstants.buildJsonPathToRarity;
 import static com.knightcharacter.app.TestConstants.buildJsonPathToRarityInBonusListByIndex;
+import static com.knightcharacter.app.TestConstants.buildJsonPathToRarityInBonusListNestedInSkillListByIndexes;
+import static com.knightcharacter.app.TestConstants.buildJsonPathToRarityInListByIndex;
 import static com.knightcharacter.app.TestConstants.buildJsonPathToRequiredAgility;
+import static com.knightcharacter.app.TestConstants.buildJsonPathToRequiredAgilityInListByIndex;
 import static com.knightcharacter.app.TestConstants.buildJsonPathToRequiredIntelligence;
+import static com.knightcharacter.app.TestConstants.buildJsonPathToRequiredIntelligenceInListByIndex;
 import static com.knightcharacter.app.TestConstants.buildJsonPathToRequiredLevel;
+import static com.knightcharacter.app.TestConstants.buildJsonPathToRequiredLevelInListByIndex;
 import static com.knightcharacter.app.TestConstants.buildJsonPathToRequiredStrength;
+import static com.knightcharacter.app.TestConstants.buildJsonPathToRequiredStrengthInListByIndex;
 import static com.knightcharacter.app.TestConstants.buildJsonPathToSkillBoostInBonusListByIndex;
+import static com.knightcharacter.app.TestConstants.buildJsonPathToSkillBoostInBonusListNestedInSkillListByIndexes;
 import static com.knightcharacter.app.TestConstants.buildJsonPathToWeaponType;
+import static com.knightcharacter.app.TestConstants.buildJsonPathToWeaponTypeInListByIndex;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -238,5 +258,89 @@ class WeaponResourceIntegrationTest {
             .andExpect(status().isBadRequest());
 
         assertThat(weaponRepository.count()).isEqualTo(0);
+    }
+
+    @Test
+    void getAllWeapons_shouldReturnAllWeaponResponseDtos() throws Exception {
+        Bonus bonus = bonusRepository.save(BonusFactory.bonusInstance());
+        Weapon firstWeapon = weaponRepository.save(WeaponFactory.weaponInstance(List.of(bonus)));
+        Weapon secondWeapon = weaponRepository.save(WeaponFactory.weaponInstance(List.of(bonus)));
+
+        mockMvc.perform(get(API_BASE_ITEMS + API_BASE_WEAPONS))
+            .andExpect(status().isFound())
+            .andExpect(jsonPath(buildJsonPathToLength()).value(2))
+            .andExpect(jsonPath(buildJsonPathToIdInListByIndex(0)).value(firstWeapon.getId()))
+            .andExpect(jsonPath(buildJsonPathToDamageInListByIndex(0)).value(firstWeapon.getDamage()))
+            .andExpect(jsonPath(buildJsonPathToRarityInListByIndex(0)).value(firstWeapon.getRarity().name()))
+            .andExpect(jsonPath(buildJsonPathToWeaponTypeInListByIndex(0)).value(firstWeapon.getWeaponType().name()))
+            .andExpect(jsonPath(buildJsonPathToRequiredAgilityInListByIndex(0)).value(firstWeapon.getRequiredAgility()))
+            .andExpect(jsonPath(buildJsonPathToRequiredIntelligenceInListByIndex(0))
+                .value(firstWeapon.getRequiredIntelligence()))
+            .andExpect(jsonPath(buildJsonPathToRequiredLevelInListByIndex(0)).value(firstWeapon.getRequiredLevel()))
+            .andExpect(
+                jsonPath(buildJsonPathToRequiredStrengthInListByIndex(0)).value(firstWeapon.getRequiredStrength()))
+            .andExpect(jsonPath(buildJsonPathToBonusesInListByIndex(0)).exists())
+            .andExpect(jsonPath(buildJsonPathToIdInBonusListNestedInSkillListByIndexes(0, 0)).value(bonus.getId()))
+            .andExpect(jsonPath(buildJsonPathToNameInBonusListNestedInSkillListByIndexes(0, 0)).value(bonus.getName()))
+            .andExpect(jsonPath(buildJsonPathToRarityInBonusListNestedInSkillListByIndexes(0, 0))
+                .value(bonus.getRarity().toString()))
+            .andExpect(jsonPath(buildJsonPathToDamageBoostInBonusListNestedInSkillListByIndexes(0, 0))
+                .value(bonus.getDamageBoost()))
+            .andExpect(jsonPath(buildJsonPathToCritChanceBoostInBonusListNestedInSkillListByIndexes(0, 0))
+                .value(bonus.getCritChanceBoost()))
+            .andExpect(jsonPath(buildJsonPathToCritDamageBoostInBonusListNestedInSkillListByIndexes(0, 0))
+                .value(bonus.getCritDamageBoost()))
+            .andExpect(jsonPath(buildJsonPathToSkillBoostInBonusListNestedInSkillListByIndexes(0, 0))
+                .value(bonus.getSkillBoost()))
+            .andExpect(jsonPath(buildJsonPathToIdInListByIndex(1)).value(secondWeapon.getId()))
+            .andExpect(jsonPath(buildJsonPathToDamageInListByIndex(1)).value(secondWeapon.getDamage()))
+            .andExpect(jsonPath(buildJsonPathToRarityInListByIndex(1)).value(secondWeapon.getRarity().name()))
+            .andExpect(jsonPath(buildJsonPathToWeaponTypeInListByIndex(1)).value(secondWeapon.getWeaponType().name()))
+            .andExpect(
+                jsonPath(buildJsonPathToRequiredAgilityInListByIndex(1)).value(secondWeapon.getRequiredAgility()))
+            .andExpect(jsonPath(buildJsonPathToRequiredIntelligenceInListByIndex(1))
+                .value(secondWeapon.getRequiredIntelligence()))
+            .andExpect(jsonPath(buildJsonPathToRequiredLevelInListByIndex(1)).value(secondWeapon.getRequiredLevel()))
+            .andExpect(
+                jsonPath(buildJsonPathToRequiredStrengthInListByIndex(1)).value(secondWeapon.getRequiredStrength()))
+            .andExpect(jsonPath(buildJsonPathToBonusesInListByIndex(1)).exists())
+            .andExpect(jsonPath(buildJsonPathToIdInBonusListNestedInSkillListByIndexes(1, 0)).value(bonus.getId()))
+            .andExpect(jsonPath(buildJsonPathToNameInBonusListNestedInSkillListByIndexes(1, 0)).value(bonus.getName()))
+            .andExpect(jsonPath(buildJsonPathToRarityInBonusListNestedInSkillListByIndexes(1, 0))
+                .value(bonus.getRarity().toString()))
+            .andExpect(jsonPath(buildJsonPathToDamageBoostInBonusListNestedInSkillListByIndexes(1, 0))
+                .value(bonus.getDamageBoost()))
+            .andExpect(jsonPath(buildJsonPathToCritChanceBoostInBonusListNestedInSkillListByIndexes(1, 0))
+                .value(bonus.getCritChanceBoost()))
+            .andExpect(jsonPath(buildJsonPathToCritDamageBoostInBonusListNestedInSkillListByIndexes(1, 0))
+                .value(bonus.getCritDamageBoost()))
+            .andExpect(jsonPath(buildJsonPathToSkillBoostInBonusListNestedInSkillListByIndexes(1, 0))
+                .value(bonus.getSkillBoost()));
+    }
+
+    @Test
+    void getWeaponById_shouldReturnWeaponResponseDto_whenIdIsCorrect() throws Exception {
+        Bonus bonus = bonusRepository.save(BonusFactory.bonusInstance());
+        Weapon weapon = weaponRepository.save(WeaponFactory.weaponInstance(List.of(bonus)));
+
+        mockMvc.perform(get(buildGetWeaponByIdUrl(weapon.getId())))
+            .andExpect(status().isFound())
+            .andExpect(jsonPath(buildJsonPathToId()).value(weapon.getId()))
+            .andExpect(jsonPath(buildJsonPathToDamage()).value(weapon.getDamage()))
+            .andExpect(jsonPath(buildJsonPathToRarity()).value(weapon.getRarity().name()))
+            .andExpect(jsonPath(buildJsonPathToWeaponType()).value(weapon.getWeaponType().name()))
+            .andExpect(jsonPath(buildJsonPathToRequiredAgility()).value(weapon.getRequiredAgility()))
+            .andExpect(jsonPath(buildJsonPathToRequiredIntelligence()).value(weapon.getRequiredIntelligence()))
+            .andExpect(jsonPath(buildJsonPathToRequiredLevel()).value(weapon.getRequiredLevel()))
+            .andExpect(jsonPath(buildJsonPathToRequiredStrength()).value(weapon.getRequiredStrength()))
+            .andExpect(jsonPath(buildJsonPathToBonuses()).exists())
+            .andExpect(jsonPath(buildJsonPathToBonusesLength()).value(1))
+            .andExpect(jsonPath(buildJsonPathToIdInBonusListByIndex(0)).value(bonus.getId()))
+            .andExpect(jsonPath(buildJsonPathToNameInBonusListByIndex(0)).value(bonus.getName()))
+            .andExpect(jsonPath(buildJsonPathToRarityInBonusListByIndex(0)).value(bonus.getRarity().toString()))
+            .andExpect(jsonPath(buildJsonPathToDamageBoostInBonusListByIndex(0)).value(bonus.getDamageBoost()))
+            .andExpect(jsonPath(buildJsonPathToCritChanceBoostInBonusListByIndex(0)).value(bonus.getCritChanceBoost()))
+            .andExpect(jsonPath(buildJsonPathToCritDamageBoostInBonusListByIndex(0)).value(bonus.getCritDamageBoost()))
+            .andExpect(jsonPath(buildJsonPathToSkillBoostInBonusListByIndex(0)).value(bonus.getSkillBoost()));
     }
 }
