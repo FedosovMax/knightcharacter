@@ -6,6 +6,9 @@ import static com.knightcharacter.app.Constants.API_BASE_SKILLS;
 import static com.knightcharacter.app.Constants.API_BASE_WEAPONS;
 import static com.knightcharacter.app.Constants.BASE_CHARACTER;
 
+import lombok.experimental.UtilityClass;
+
+@UtilityClass
 public class TestConstants {
 
     public static final String JSON_ROOT = "$.";
@@ -68,6 +71,14 @@ public class TestConstants {
     }
 
     public static String buildGetWeaponByIdUrl(String weaponId) {
+        return API_BASE_ITEMS + API_BASE_WEAPONS + "/" + weaponId;
+    }
+
+    public static String buildPutWeaponByIdUrl(String weaponId) {
+        return API_BASE_ITEMS + API_BASE_WEAPONS + "/" + weaponId;
+    }
+
+    public static String buildDeleteWeaponByIdUrl(String weaponId) {
         return API_BASE_ITEMS + API_BASE_WEAPONS + "/" + weaponId;
     }
 
