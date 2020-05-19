@@ -49,8 +49,7 @@ public class WeaponResource {
     public ResponseEntity<List<WeaponResponseDto>> getAllWeapons() {
         log.info("Request to get all weapons");
         return ResponseEntity.status(HttpStatus.FOUND)
-            .body(weaponService.findAll()
-                .stream()
+            .body(weaponService.findAll().stream()
                 .map(weaponRestMapper::toWeaponResponseDto)
                 .collect(Collectors.toList()));
     }

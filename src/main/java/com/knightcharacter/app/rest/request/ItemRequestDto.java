@@ -5,6 +5,7 @@ import com.knightcharacter.app.validation.annotation.ValidRarity;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 import lombok.AllArgsConstructor;
@@ -17,6 +18,12 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @SuperBuilder
 public abstract class ItemRequestDto {
+
+    @NotBlank
+    private String name;
+
+    @NotBlank
+    private String description;
 
     @NotNull
     private Integer requiredLevel;

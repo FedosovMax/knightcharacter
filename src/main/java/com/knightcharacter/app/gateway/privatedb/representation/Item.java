@@ -39,6 +39,10 @@ public abstract class Item {
     @ColumnDefault("random_uuid()")
     private String id;
 
+    private String name;
+
+    private String description;
+
     @Column(name = "required_level")
     private Integer requiredLevel;
 

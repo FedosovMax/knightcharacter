@@ -18,6 +18,10 @@ public abstract class ItemVO {
 
         private String id;
 
+        private String name;
+
+        private String description;
+
         private Integer requiredLevel;
 
         private Integer requiredStrength;

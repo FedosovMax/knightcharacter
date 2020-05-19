@@ -15,13 +15,17 @@ import static com.knightcharacter.app.TestConstants.buildJsonPathToDamage;
 import static com.knightcharacter.app.TestConstants.buildJsonPathToDamageBoostInBonusListByIndex;
 import static com.knightcharacter.app.TestConstants.buildJsonPathToDamageBoostInBonusListNestedInSkillListByIndexes;
 import static com.knightcharacter.app.TestConstants.buildJsonPathToDamageInListByIndex;
+import static com.knightcharacter.app.TestConstants.buildJsonPathToDescription;
+import static com.knightcharacter.app.TestConstants.buildJsonPathToDescriptionInListByIndex;
 import static com.knightcharacter.app.TestConstants.buildJsonPathToId;
 import static com.knightcharacter.app.TestConstants.buildJsonPathToIdInBonusListByIndex;
 import static com.knightcharacter.app.TestConstants.buildJsonPathToIdInBonusListNestedInSkillListByIndexes;
 import static com.knightcharacter.app.TestConstants.buildJsonPathToIdInListByIndex;
 import static com.knightcharacter.app.TestConstants.buildJsonPathToLength;
+import static com.knightcharacter.app.TestConstants.buildJsonPathToName;
 import static com.knightcharacter.app.TestConstants.buildJsonPathToNameInBonusListByIndex;
 import static com.knightcharacter.app.TestConstants.buildJsonPathToNameInBonusListNestedInSkillListByIndexes;
+import static com.knightcharacter.app.TestConstants.buildJsonPathToNameInListByIndex;
 import static com.knightcharacter.app.TestConstants.buildJsonPathToRarity;
 import static com.knightcharacter.app.TestConstants.buildJsonPathToRarityInBonusListByIndex;
 import static com.knightcharacter.app.TestConstants.buildJsonPathToRarityInBonusListNestedInSkillListByIndexes;
@@ -62,7 +66,6 @@ import com.knightcharacter.app.rest.request.WeaponRequestDto;
 import java.util.List;
 
 import lombok.AccessLevel;
-import lombok.SneakyThrows;
 import lombok.experimental.FieldDefaults;
 
 import org.junit.jupiter.api.AfterEach;
@@ -100,8 +103,7 @@ class WeaponResourceIntegrationTest {
 
     @Test
     @Transactional
-    @SneakyThrows
-    void addWeapon_shouldAddWeaponAndReturnWeaponResponseDto_whenRequestIsCorrect() {
+    void addWeapon_shouldAddWeaponAndReturnWeaponResponseDto_whenRequestIsCorrect() throws Exception {
         Bonus bonus = bonusRepository.save(BonusFactory.bonusInstance());
         WeaponRequestDto requestDto = WeaponFactory.createWeaponRequestDto(List.of(bonus.getId()));
 
@@ -113,6 +115,8 @@ class WeaponResourceIntegrationTest {
             .andExpect(jsonPath(buildJsonPathToDamage()).value(requestDto.getDamage()))
             .andExpect(jsonPath(buildJsonPathToRarity()).value(requestDto.getRarity()))
             .andExpect(jsonPath(buildJsonPathToWeaponType()).value(requestDto.getWeaponType()))
+            .andExpect(jsonPath(buildJsonPathToName()).value(requestDto.getName()))
+            .andExpect(jsonPath(buildJsonPathToDescription()).value(requestDto.getDescription()))
             .andExpect(jsonPath(buildJsonPathToRequiredAgility()).value(requestDto.getRequiredAgility()))
             .andExpect(jsonPath(buildJsonPathToRequiredIntelligence()).value(requestDto.getRequiredIntelligence()))
             .andExpect(jsonPath(buildJsonPathToRequiredLevel()).value(requestDto.getRequiredLevel()))
@@ -132,6 +136,8 @@ class WeaponResourceIntegrationTest {
         assertThat(savedWeapon.getDamage()).isEqualTo(requestDto.getDamage());
         assertThat(savedWeapon.getRarity().name()).isEqualTo(requestDto.getRarity());
         assertThat(savedWeapon.getWeaponType().name()).isEqualTo(requestDto.getWeaponType());
+        assertThat(savedWeapon.getName()).isEqualTo(requestDto.getName());
+        assertThat(savedWeapon.getDescription()).isEqualTo(requestDto.getDescription());
         assertThat(savedWeapon.getRequiredAgility()).isEqualTo(requestDto.getRequiredAgility());
         assertThat(savedWeapon.getRequiredIntelligence()).isEqualTo(requestDto.getRequiredIntelligence());
         assertThat(savedWeapon.getRequiredLevel()).isEqualTo(requestDto.getRequiredLevel());
@@ -139,8 +145,7 @@ class WeaponResourceIntegrationTest {
     }
 
     @Test
-    @SneakyThrows
-    void addWeapon_shouldRespondWithBadRequestStatus_whenDamageIsNull() {
+    void addWeapon_shouldRespondWithBadRequestStatus_whenDamageIsNull() throws Exception {
         Bonus bonus = bonusRepository.save(BonusFactory.bonusInstance());
         WeaponRequestDto requestDto = WeaponFactory.createWeaponRequestDtoWithoutDamage(List.of(bonus.getId()));
 
@@ -153,8 +158,7 @@ class WeaponResourceIntegrationTest {
     }
 
     @Test
-    @SneakyThrows
-    void addWeapon_shouldRespondWithBadRequestStatus_whenWeaponTypeIsNull() {
+    void addWeapon_shouldRespondWithBadRequestStatus_whenWeaponTypeIsNull() throws Exception {
         Bonus bonus = bonusRepository.save(BonusFactory.bonusInstance());
         WeaponRequestDto requestDto = WeaponFactory.createWeaponRequestDtoWithoutWeaponType(List.of(bonus.getId()));
 
@@ -167,8 +171,7 @@ class WeaponResourceIntegrationTest {
     }
 
     @Test
-    @SneakyThrows
-    void addWeapon_shouldRespondWithBadRequestStatus_whenWeaponTypeIsInvalid() {
+    void addWeapon_shouldRespondWithBadRequestStatus_whenWeaponTypeIsInvalid() throws Exception {
         Bonus bonus = bonusRepository.save(BonusFactory.bonusInstance());
         WeaponRequestDto requestDto = WeaponFactory.createWeaponRequestDtoWithInvalidWeaponType(List.of(bonus.getId()));
 
@@ -181,8 +184,61 @@ class WeaponResourceIntegrationTest {
     }
 
     @Test
-    @SneakyThrows
-    void addWeapon_shouldRespondWithBadRequestStatus_whenRequiredLevelIsNull() {
+    void addWeapon_shouldRespondWithBadRequestStatus_whenNameIsNull() throws Exception {
+        Bonus bonus = bonusRepository.save(BonusFactory.bonusInstance());
+        WeaponRequestDto requestDto = WeaponFactory.createWeaponRequestDtoWithoutName(List.of(bonus.getId()));
+
+        mockMvc.perform(post(API_BASE_ITEMS + API_BASE_WEAPONS)
+            .content(objectMapper.writeValueAsString(requestDto))
+            .contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(status().isBadRequest());
+
+        assertThat(weaponRepository.count()).isEqualTo(0);
+    }
+
+    @Test
+    void addWeapon_shouldRespondWithBadRequestStatus_whenNameConsistsOfSpaces() throws Exception {
+        Bonus bonus = bonusRepository.save(BonusFactory.bonusInstance());
+        WeaponRequestDto requestDto = WeaponFactory
+            .createWeaponRequestDtoWithNameConsistingOfSpaces(List.of(bonus.getId()));
+
+        mockMvc.perform(post(API_BASE_ITEMS + API_BASE_WEAPONS)
+            .content(objectMapper.writeValueAsString(requestDto))
+            .contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(status().isBadRequest());
+
+        assertThat(weaponRepository.count()).isEqualTo(0);
+    }
+
+    @Test
+    void addWeapon_shouldRespondWithBadRequestStatus_whenDescriptionIsNull() throws Exception {
+        Bonus bonus = bonusRepository.save(BonusFactory.bonusInstance());
+        WeaponRequestDto requestDto = WeaponFactory.createWeaponRequestDtoWithoutDescription(List.of(bonus.getId()));
+
+        mockMvc.perform(post(API_BASE_ITEMS + API_BASE_WEAPONS)
+            .content(objectMapper.writeValueAsString(requestDto))
+            .contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(status().isBadRequest());
+
+        assertThat(weaponRepository.count()).isEqualTo(0);
+    }
+
+    @Test
+    void addWeapon_shouldRespondWithBadRequestStatus_whenDescriptionConsistsOfSpaces() throws Exception {
+        Bonus bonus = bonusRepository.save(BonusFactory.bonusInstance());
+        WeaponRequestDto requestDto = WeaponFactory
+            .createWeaponRequestDtoWithDescriptionConsistingOfSpaces(List.of(bonus.getId()));
+
+        mockMvc.perform(post(API_BASE_ITEMS + API_BASE_WEAPONS)
+            .content(objectMapper.writeValueAsString(requestDto))
+            .contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(status().isBadRequest());
+
+        assertThat(weaponRepository.count()).isEqualTo(0);
+    }
+
+    @Test
+    void addWeapon_shouldRespondWithBadRequestStatus_whenRequiredLevelIsNull() throws Exception {
         Bonus bonus = bonusRepository.save(BonusFactory.bonusInstance());
         WeaponRequestDto requestDto = WeaponFactory.createWeaponRequestDtoWithoutRequiredLevel(List.of(bonus.getId()));
 
@@ -195,8 +251,7 @@ class WeaponResourceIntegrationTest {
     }
 
     @Test
-    @SneakyThrows
-    void addWeapon_shouldRespondWithBadRequestStatus_whenRequiredAgilityIsNull() {
+    void addWeapon_shouldRespondWithBadRequestStatus_whenRequiredAgilityIsNull() throws Exception {
         Bonus bonus = bonusRepository.save(BonusFactory.bonusInstance());
         WeaponRequestDto requestDto = WeaponFactory
             .createWeaponRequestDtoWithoutRequiredAgility(List.of(bonus.getId()));
@@ -210,8 +265,7 @@ class WeaponResourceIntegrationTest {
     }
 
     @Test
-    @SneakyThrows
-    void addWeapon_shouldRespondWithBadRequestStatus_whenRequiredIntelligenceIsNull() {
+    void addWeapon_shouldRespondWithBadRequestStatus_whenRequiredIntelligenceIsNull() throws Exception {
         Bonus bonus = bonusRepository.save(BonusFactory.bonusInstance());
         WeaponRequestDto requestDto = WeaponFactory
             .createWeaponRequestDtoWithoutRequiredIntelligence(List.of(bonus.getId()));
@@ -225,8 +279,7 @@ class WeaponResourceIntegrationTest {
     }
 
     @Test
-    @SneakyThrows
-    void addWeapon_shouldRespondWithBadRequestStatus_whenRequiredStrengthIsNull() {
+    void addWeapon_shouldRespondWithBadRequestStatus_whenRequiredStrengthIsNull() throws Exception {
         Bonus bonus = bonusRepository.save(BonusFactory.bonusInstance());
         WeaponRequestDto requestDto = WeaponFactory
             .createWeaponRequestDtoWithoutRequiredStrength(List.of(bonus.getId()));
@@ -240,8 +293,7 @@ class WeaponResourceIntegrationTest {
     }
 
     @Test
-    @SneakyThrows
-    void addWeapon_shouldRespondWithBadRequestStatus_whenRarityIsNull() {
+    void addWeapon_shouldRespondWithBadRequestStatus_whenRarityIsNull() throws Exception {
         Bonus bonus = bonusRepository.save(BonusFactory.bonusInstance());
         WeaponRequestDto requestDto = WeaponFactory.createWeaponRequestDtoWithoutRarity(List.of(bonus.getId()));
 
@@ -254,8 +306,7 @@ class WeaponResourceIntegrationTest {
     }
 
     @Test
-    @SneakyThrows
-    void addWeapon_shouldRespondWithBadRequestStatus_whenRarityIsInvalid() {
+    void addWeapon_shouldRespondWithBadRequestStatus_whenRarityIsInvalid() throws Exception {
         Bonus bonus = bonusRepository.save(BonusFactory.bonusInstance());
         WeaponRequestDto requestDto = WeaponFactory.createWeaponRequestDtoWithInvalidRarity(List.of(bonus.getId()));
 
@@ -268,8 +319,7 @@ class WeaponResourceIntegrationTest {
     }
 
     @Test
-    @SneakyThrows
-    void addWeapon_shouldRespondWithBadRequestStatus_whenBonusIdsIsNull() {
+    void addWeapon_shouldRespondWithBadRequestStatus_whenBonusIdsIsNull() throws Exception {
         WeaponRequestDto requestDto = WeaponFactory.createWeaponRequestDtoWithoutBonusIds();
 
         mockMvc.perform(post(API_BASE_ITEMS + API_BASE_WEAPONS)
@@ -281,8 +331,7 @@ class WeaponResourceIntegrationTest {
     }
 
     @Test
-    @SneakyThrows
-    void getAllWeapons_shouldReturnAllWeaponResponseDtos() {
+    void getAllWeapons_shouldReturnAllWeaponResponseDtos() throws Exception {
         Bonus bonus = bonusRepository.save(BonusFactory.bonusInstance());
         Weapon firstWeapon = weaponRepository.save(WeaponFactory.weaponInstance(List.of(bonus)));
         Weapon secondWeapon = weaponRepository.save(WeaponFactory.weaponInstance(List.of(bonus)));
@@ -294,6 +343,8 @@ class WeaponResourceIntegrationTest {
             .andExpect(jsonPath(buildJsonPathToDamageInListByIndex(0)).value(firstWeapon.getDamage()))
             .andExpect(jsonPath(buildJsonPathToRarityInListByIndex(0)).value(firstWeapon.getRarity().name()))
             .andExpect(jsonPath(buildJsonPathToWeaponTypeInListByIndex(0)).value(firstWeapon.getWeaponType().name()))
+            .andExpect(jsonPath(buildJsonPathToNameInListByIndex(0)).value(firstWeapon.getName()))
+            .andExpect(jsonPath(buildJsonPathToDescriptionInListByIndex(0)).value(firstWeapon.getDescription()))
             .andExpect(jsonPath(buildJsonPathToRequiredAgilityInListByIndex(0)).value(firstWeapon.getRequiredAgility()))
             .andExpect(jsonPath(buildJsonPathToRequiredIntelligenceInListByIndex(0))
                 .value(firstWeapon.getRequiredIntelligence()))
@@ -317,6 +368,8 @@ class WeaponResourceIntegrationTest {
             .andExpect(jsonPath(buildJsonPathToDamageInListByIndex(1)).value(secondWeapon.getDamage()))
             .andExpect(jsonPath(buildJsonPathToRarityInListByIndex(1)).value(secondWeapon.getRarity().name()))
             .andExpect(jsonPath(buildJsonPathToWeaponTypeInListByIndex(1)).value(secondWeapon.getWeaponType().name()))
+            .andExpect(jsonPath(buildJsonPathToNameInListByIndex(1)).value(secondWeapon.getName()))
+            .andExpect(jsonPath(buildJsonPathToDescriptionInListByIndex(1)).value(secondWeapon.getDescription()))
             .andExpect(
                 jsonPath(buildJsonPathToRequiredAgilityInListByIndex(1)).value(secondWeapon.getRequiredAgility()))
             .andExpect(jsonPath(buildJsonPathToRequiredIntelligenceInListByIndex(1))
@@ -340,8 +393,7 @@ class WeaponResourceIntegrationTest {
     }
 
     @Test
-    @SneakyThrows
-    void getWeaponById_shouldReturnWeaponResponseDto_whenIdIsCorrect() {
+    void getWeaponById_shouldReturnWeaponResponseDto_whenIdIsCorrect() throws Exception {
         Bonus bonus = bonusRepository.save(BonusFactory.bonusInstance());
         Weapon weapon = weaponRepository.save(WeaponFactory.weaponInstance(List.of(bonus)));
 
@@ -351,6 +403,8 @@ class WeaponResourceIntegrationTest {
             .andExpect(jsonPath(buildJsonPathToDamage()).value(weapon.getDamage()))
             .andExpect(jsonPath(buildJsonPathToRarity()).value(weapon.getRarity().name()))
             .andExpect(jsonPath(buildJsonPathToWeaponType()).value(weapon.getWeaponType().name()))
+            .andExpect(jsonPath(buildJsonPathToName()).value(weapon.getName()))
+            .andExpect(jsonPath(buildJsonPathToDescription()).value(weapon.getDescription()))
             .andExpect(jsonPath(buildJsonPathToRequiredAgility()).value(weapon.getRequiredAgility()))
             .andExpect(jsonPath(buildJsonPathToRequiredIntelligence()).value(weapon.getRequiredIntelligence()))
             .andExpect(jsonPath(buildJsonPathToRequiredLevel()).value(weapon.getRequiredLevel()))
@@ -367,8 +421,7 @@ class WeaponResourceIntegrationTest {
     }
 
     @Test
-    @SneakyThrows
-    void updateWeapon_shouldUpdateWeaponAndReturnWeaponResponseDto_whenRequestIsCorrect() {
+    void updateWeapon_shouldUpdateWeaponAndReturnWeaponResponseDto_whenRequestIsCorrect() throws Exception {
         Bonus firstBonus = bonusRepository.save(BonusFactory.bonusInstance());
         Bonus secondBonus = bonusRepository.save(BonusFactory.bonusInstance());
         Weapon weapon = weaponRepository.save(WeaponFactory.weaponInstance(List.of(firstBonus)));
@@ -383,6 +436,8 @@ class WeaponResourceIntegrationTest {
             .andExpect(jsonPath(buildJsonPathToDamage()).value(requestDto.getDamage()))
             .andExpect(jsonPath(buildJsonPathToRarity()).value(requestDto.getRarity()))
             .andExpect(jsonPath(buildJsonPathToWeaponType()).value(requestDto.getWeaponType()))
+            .andExpect(jsonPath(buildJsonPathToName()).value(requestDto.getName()))
+            .andExpect(jsonPath(buildJsonPathToDescription()).value(requestDto.getDescription()))
             .andExpect(jsonPath(buildJsonPathToRequiredAgility()).value(requestDto.getRequiredAgility()))
             .andExpect(jsonPath(buildJsonPathToRequiredIntelligence()).value(requestDto.getRequiredIntelligence()))
             .andExpect(jsonPath(buildJsonPathToRequiredLevel()).value(requestDto.getRequiredLevel()))
@@ -403,6 +458,8 @@ class WeaponResourceIntegrationTest {
 
         assertThat(updatedWeapon.getDamage()).isEqualTo(requestDto.getDamage());
         assertThat(updatedWeapon.getWeaponType().name()).isEqualTo(requestDto.getWeaponType());
+        assertThat(updatedWeapon.getName()).isEqualTo(requestDto.getName());
+        assertThat(updatedWeapon.getDescription()).isEqualTo(requestDto.getDescription());
         assertThat(updatedWeapon.getRarity().name()).isEqualTo(requestDto.getRarity());
         assertThat(updatedWeapon.getRequiredAgility()).isEqualTo(requestDto.getRequiredAgility());
         assertThat(updatedWeapon.getRequiredIntelligence()).isEqualTo(requestDto.getRequiredIntelligence());
@@ -411,8 +468,7 @@ class WeaponResourceIntegrationTest {
     }
 
     @Test
-    @SneakyThrows
-    void updateWeapon_shouldRespondWithBadRequestStatus_whenDamageIsNull() {
+    void updateWeapon_shouldRespondWithBadRequestStatus_whenDamageIsNull() throws Exception {
         Weapon weapon = weaponRepository.save(WeaponFactory.weaponInstance());
         WeaponRequestDto requestDto = WeaponFactory.updateWeaponRequestDtoWithoutDamage();
 
@@ -425,6 +481,8 @@ class WeaponResourceIntegrationTest {
 
         assertThat(weapon.getDamage()).isNotEqualTo(requestDto.getDamage());
         assertThat(weapon.getWeaponType().name()).isNotEqualTo(requestDto.getWeaponType());
+        assertThat(weapon.getName()).isNotEqualTo(requestDto.getName());
+        assertThat(weapon.getDescription()).isNotEqualTo(requestDto.getDescription());
         assertThat(weapon.getRarity().name()).isNotEqualTo(requestDto.getRarity());
         assertThat(weapon.getRequiredAgility()).isNotEqualTo(requestDto.getRequiredAgility());
         assertThat(weapon.getRequiredIntelligence()).isNotEqualTo(requestDto.getRequiredIntelligence());
@@ -433,8 +491,7 @@ class WeaponResourceIntegrationTest {
     }
 
     @Test
-    @SneakyThrows
-    void updateWeapon_shouldRespondWithBadRequestStatus_whenRarityIsNull() {
+    void updateWeapon_shouldRespondWithBadRequestStatus_whenRarityIsNull() throws Exception {
         Weapon weapon = weaponRepository.save(WeaponFactory.weaponInstance());
         WeaponRequestDto requestDto = WeaponFactory.updateWeaponRequestDtoWithoutRarity();
 
@@ -447,6 +504,8 @@ class WeaponResourceIntegrationTest {
 
         assertThat(weapon.getDamage()).isNotEqualTo(requestDto.getDamage());
         assertThat(weapon.getWeaponType().name()).isNotEqualTo(requestDto.getWeaponType());
+        assertThat(weapon.getName()).isNotEqualTo(requestDto.getName());
+        assertThat(weapon.getDescription()).isNotEqualTo(requestDto.getDescription());
         assertThat(weapon.getRarity().name()).isNotEqualTo(requestDto.getRarity());
         assertThat(weapon.getRequiredAgility()).isNotEqualTo(requestDto.getRequiredAgility());
         assertThat(weapon.getRequiredIntelligence()).isNotEqualTo(requestDto.getRequiredIntelligence());
@@ -455,8 +514,7 @@ class WeaponResourceIntegrationTest {
     }
 
     @Test
-    @SneakyThrows
-    void updateWeapon_shouldRespondWithBadRequestStatus_whenRarityIsInvalid() {
+    void updateWeapon_shouldRespondWithBadRequestStatus_whenRarityIsInvalid() throws Exception {
         Weapon weapon = weaponRepository.save(WeaponFactory.weaponInstance());
         WeaponRequestDto requestDto = WeaponFactory.updateWeaponRequestDtoWithInvalidRarity();
 
@@ -469,6 +527,8 @@ class WeaponResourceIntegrationTest {
 
         assertThat(weapon.getDamage()).isNotEqualTo(requestDto.getDamage());
         assertThat(weapon.getWeaponType().name()).isNotEqualTo(requestDto.getWeaponType());
+        assertThat(weapon.getName()).isNotEqualTo(requestDto.getName());
+        assertThat(weapon.getDescription()).isNotEqualTo(requestDto.getDescription());
         assertThat(weapon.getRarity().name()).isNotEqualTo(requestDto.getRarity());
         assertThat(weapon.getRequiredAgility()).isNotEqualTo(requestDto.getRequiredAgility());
         assertThat(weapon.getRequiredIntelligence()).isNotEqualTo(requestDto.getRequiredIntelligence());
@@ -477,8 +537,7 @@ class WeaponResourceIntegrationTest {
     }
 
     @Test
-    @SneakyThrows
-    void updateWeapon_shouldRespondWithBadRequestStatus_whenWeaponTypeIsNull() {
+    void updateWeapon_shouldRespondWithBadRequestStatus_whenWeaponTypeIsNull() throws Exception {
         Weapon weapon = weaponRepository.save(WeaponFactory.weaponInstance());
         WeaponRequestDto requestDto = WeaponFactory.updateWeaponRequestDtoWithoutWeaponType();
 
@@ -491,6 +550,8 @@ class WeaponResourceIntegrationTest {
 
         assertThat(weapon.getDamage()).isNotEqualTo(requestDto.getDamage());
         assertThat(weapon.getWeaponType().name()).isNotEqualTo(requestDto.getWeaponType());
+        assertThat(weapon.getName()).isNotEqualTo(requestDto.getName());
+        assertThat(weapon.getDescription()).isNotEqualTo(requestDto.getDescription());
         assertThat(weapon.getRarity().name()).isNotEqualTo(requestDto.getRarity());
         assertThat(weapon.getRequiredAgility()).isNotEqualTo(requestDto.getRequiredAgility());
         assertThat(weapon.getRequiredIntelligence()).isNotEqualTo(requestDto.getRequiredIntelligence());
@@ -499,8 +560,7 @@ class WeaponResourceIntegrationTest {
     }
 
     @Test
-    @SneakyThrows
-    void updateWeapon_shouldRespondWithBadRequestStatus_whenWeaponTypeIsInvalid() {
+    void updateWeapon_shouldRespondWithBadRequestStatus_whenWeaponTypeIsInvalid() throws Exception {
         Weapon weapon = weaponRepository.save(WeaponFactory.weaponInstance());
         WeaponRequestDto requestDto = WeaponFactory.updateWeaponRequestDtoWithInvalidWeaponType();
 
@@ -513,6 +573,8 @@ class WeaponResourceIntegrationTest {
 
         assertThat(weapon.getDamage()).isNotEqualTo(requestDto.getDamage());
         assertThat(weapon.getWeaponType().name()).isNotEqualTo(requestDto.getWeaponType());
+        assertThat(weapon.getName()).isNotEqualTo(requestDto.getName());
+        assertThat(weapon.getDescription()).isNotEqualTo(requestDto.getDescription());
         assertThat(weapon.getRarity().name()).isNotEqualTo(requestDto.getRarity());
         assertThat(weapon.getRequiredAgility()).isNotEqualTo(requestDto.getRequiredAgility());
         assertThat(weapon.getRequiredIntelligence()).isNotEqualTo(requestDto.getRequiredIntelligence());
@@ -521,8 +583,99 @@ class WeaponResourceIntegrationTest {
     }
 
     @Test
-    @SneakyThrows
-    void updateWeapon_shouldRespondWithBadRequestStatus_whenRequiredAgilityIsNull() {
+    void updateWeapon_shouldRespondWithBadRequestStatus_whenNameIsNull() throws Exception {
+        Weapon weapon = weaponRepository.save(WeaponFactory.weaponInstance());
+        WeaponRequestDto requestDto = WeaponFactory.updateWeaponRequestDtoWithoutName();
+
+        mockMvc.perform(put(buildPutWeaponByIdUrl(weapon.getId()))
+            .content(objectMapper.writeValueAsString(requestDto))
+            .contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(status().isBadRequest());
+
+        weapon = weaponRepository.findById(weapon.getId()).get();
+
+        assertThat(weapon.getDamage()).isNotEqualTo(requestDto.getDamage());
+        assertThat(weapon.getWeaponType().name()).isNotEqualTo(requestDto.getWeaponType());
+        assertThat(weapon.getName()).isNotEqualTo(requestDto.getName());
+        assertThat(weapon.getDescription()).isNotEqualTo(requestDto.getDescription());
+        assertThat(weapon.getRarity().name()).isNotEqualTo(requestDto.getRarity());
+        assertThat(weapon.getRequiredAgility()).isNotEqualTo(requestDto.getRequiredAgility());
+        assertThat(weapon.getRequiredIntelligence()).isNotEqualTo(requestDto.getRequiredIntelligence());
+        assertThat(weapon.getRequiredLevel()).isNotEqualTo(requestDto.getRequiredLevel());
+        assertThat(weapon.getRequiredStrength()).isNotEqualTo(requestDto.getRequiredStrength());
+    }
+
+    @Test
+    void updateWeapon_shouldRespondWithBadRequestStatus_whenNameConsistsOfSpaces() throws Exception {
+        Weapon weapon = weaponRepository.save(WeaponFactory.weaponInstance());
+        WeaponRequestDto requestDto = WeaponFactory.updateWeaponRequestDtoWithNameConsistingOfSpaces();
+
+        mockMvc.perform(put(buildPutWeaponByIdUrl(weapon.getId()))
+            .content(objectMapper.writeValueAsString(requestDto))
+            .contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(status().isBadRequest());
+
+        weapon = weaponRepository.findById(weapon.getId()).get();
+
+        assertThat(weapon.getDamage()).isNotEqualTo(requestDto.getDamage());
+        assertThat(weapon.getWeaponType().name()).isNotEqualTo(requestDto.getWeaponType());
+        assertThat(weapon.getName()).isNotEqualTo(requestDto.getName());
+        assertThat(weapon.getDescription()).isNotEqualTo(requestDto.getDescription());
+        assertThat(weapon.getRarity().name()).isNotEqualTo(requestDto.getRarity());
+        assertThat(weapon.getRequiredAgility()).isNotEqualTo(requestDto.getRequiredAgility());
+        assertThat(weapon.getRequiredIntelligence()).isNotEqualTo(requestDto.getRequiredIntelligence());
+        assertThat(weapon.getRequiredLevel()).isNotEqualTo(requestDto.getRequiredLevel());
+        assertThat(weapon.getRequiredStrength()).isNotEqualTo(requestDto.getRequiredStrength());
+    }
+
+    @Test
+    void updateWeapon_shouldRespondWithBadRequestStatus_whenWeaponDescriptionIsNull() throws Exception {
+        Weapon weapon = weaponRepository.save(WeaponFactory.weaponInstance());
+        WeaponRequestDto requestDto = WeaponFactory.updateWeaponRequestDtoWithoutDescription();
+
+        mockMvc.perform(put(buildPutWeaponByIdUrl(weapon.getId()))
+            .content(objectMapper.writeValueAsString(requestDto))
+            .contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(status().isBadRequest());
+
+        weapon = weaponRepository.findById(weapon.getId()).get();
+
+        assertThat(weapon.getDamage()).isNotEqualTo(requestDto.getDamage());
+        assertThat(weapon.getWeaponType().name()).isNotEqualTo(requestDto.getWeaponType());
+        assertThat(weapon.getName()).isNotEqualTo(requestDto.getName());
+        assertThat(weapon.getDescription()).isNotEqualTo(requestDto.getDescription());
+        assertThat(weapon.getRarity().name()).isNotEqualTo(requestDto.getRarity());
+        assertThat(weapon.getRequiredAgility()).isNotEqualTo(requestDto.getRequiredAgility());
+        assertThat(weapon.getRequiredIntelligence()).isNotEqualTo(requestDto.getRequiredIntelligence());
+        assertThat(weapon.getRequiredLevel()).isNotEqualTo(requestDto.getRequiredLevel());
+        assertThat(weapon.getRequiredStrength()).isNotEqualTo(requestDto.getRequiredStrength());
+    }
+
+    @Test
+    void updateWeapon_shouldRespondWithBadRequestStatus_whenDescriptionConsistsOfSpaces() throws Exception {
+        Weapon weapon = weaponRepository.save(WeaponFactory.weaponInstance());
+        WeaponRequestDto requestDto = WeaponFactory.updateWeaponRequestDtoWithDescriptionConsistingOfSpaces();
+
+        mockMvc.perform(put(buildPutWeaponByIdUrl(weapon.getId()))
+            .content(objectMapper.writeValueAsString(requestDto))
+            .contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(status().isBadRequest());
+
+        weapon = weaponRepository.findById(weapon.getId()).get();
+
+        assertThat(weapon.getDamage()).isNotEqualTo(requestDto.getDamage());
+        assertThat(weapon.getWeaponType().name()).isNotEqualTo(requestDto.getWeaponType());
+        assertThat(weapon.getName()).isNotEqualTo(requestDto.getName());
+        assertThat(weapon.getDescription()).isNotEqualTo(requestDto.getDescription());
+        assertThat(weapon.getRarity().name()).isNotEqualTo(requestDto.getRarity());
+        assertThat(weapon.getRequiredAgility()).isNotEqualTo(requestDto.getRequiredAgility());
+        assertThat(weapon.getRequiredIntelligence()).isNotEqualTo(requestDto.getRequiredIntelligence());
+        assertThat(weapon.getRequiredLevel()).isNotEqualTo(requestDto.getRequiredLevel());
+        assertThat(weapon.getRequiredStrength()).isNotEqualTo(requestDto.getRequiredStrength());
+    }
+
+    @Test
+    void updateWeapon_shouldRespondWithBadRequestStatus_whenRequiredAgilityIsNull() throws Exception {
         Weapon weapon = weaponRepository.save(WeaponFactory.weaponInstance());
         WeaponRequestDto requestDto = WeaponFactory.updateWeaponRequestDtoWithoutRequiredAgility();
 
@@ -535,6 +688,8 @@ class WeaponResourceIntegrationTest {
 
         assertThat(weapon.getDamage()).isNotEqualTo(requestDto.getDamage());
         assertThat(weapon.getWeaponType().name()).isNotEqualTo(requestDto.getWeaponType());
+        assertThat(weapon.getName()).isNotEqualTo(requestDto.getName());
+        assertThat(weapon.getDescription()).isNotEqualTo(requestDto.getDescription());
         assertThat(weapon.getRarity().name()).isNotEqualTo(requestDto.getRarity());
         assertThat(weapon.getRequiredAgility()).isNotEqualTo(requestDto.getRequiredAgility());
         assertThat(weapon.getRequiredIntelligence()).isNotEqualTo(requestDto.getRequiredIntelligence());
@@ -543,8 +698,7 @@ class WeaponResourceIntegrationTest {
     }
 
     @Test
-    @SneakyThrows
-    void updateWeapon_shouldRespondWithBadRequestStatus_whenRequiredIntelligenceIsNull() {
+    void updateWeapon_shouldRespondWithBadRequestStatus_whenRequiredIntelligenceIsNull() throws Exception {
         Weapon weapon = weaponRepository.save(WeaponFactory.weaponInstance());
         WeaponRequestDto requestDto = WeaponFactory.updateWeaponRequestDtoWithoutRequiredIntelligence();
 
@@ -557,6 +711,8 @@ class WeaponResourceIntegrationTest {
 
         assertThat(weapon.getDamage()).isNotEqualTo(requestDto.getDamage());
         assertThat(weapon.getWeaponType().name()).isNotEqualTo(requestDto.getWeaponType());
+        assertThat(weapon.getName()).isNotEqualTo(requestDto.getName());
+        assertThat(weapon.getDescription()).isNotEqualTo(requestDto.getDescription());
         assertThat(weapon.getRarity().name()).isNotEqualTo(requestDto.getRarity());
         assertThat(weapon.getRequiredAgility()).isNotEqualTo(requestDto.getRequiredAgility());
         assertThat(weapon.getRequiredIntelligence()).isNotEqualTo(requestDto.getRequiredIntelligence());
@@ -565,8 +721,7 @@ class WeaponResourceIntegrationTest {
     }
 
     @Test
-    @SneakyThrows
-    void updateWeapon_shouldRespondWithBadRequestStatus_whenRequiredLevelIsNull() {
+    void updateWeapon_shouldRespondWithBadRequestStatus_whenRequiredLevelIsNull() throws Exception {
         Weapon weapon = weaponRepository.save(WeaponFactory.weaponInstance());
         WeaponRequestDto requestDto = WeaponFactory.updateWeaponRequestDtoWithoutRequiredLevel();
 
@@ -579,6 +734,8 @@ class WeaponResourceIntegrationTest {
 
         assertThat(weapon.getDamage()).isNotEqualTo(requestDto.getDamage());
         assertThat(weapon.getWeaponType().name()).isNotEqualTo(requestDto.getWeaponType());
+        assertThat(weapon.getName()).isNotEqualTo(requestDto.getName());
+        assertThat(weapon.getDescription()).isNotEqualTo(requestDto.getDescription());
         assertThat(weapon.getRarity().name()).isNotEqualTo(requestDto.getRarity());
         assertThat(weapon.getRequiredAgility()).isNotEqualTo(requestDto.getRequiredAgility());
         assertThat(weapon.getRequiredIntelligence()).isNotEqualTo(requestDto.getRequiredIntelligence());
@@ -587,8 +744,7 @@ class WeaponResourceIntegrationTest {
     }
 
     @Test
-    @SneakyThrows
-    void updateWeapon_shouldRespondWithBadRequestStatus_whenRequiredStrengthIsNull() {
+    void updateWeapon_shouldRespondWithBadRequestStatus_whenRequiredStrengthIsNull() throws Exception {
         Weapon weapon = weaponRepository.save(WeaponFactory.weaponInstance());
         WeaponRequestDto requestDto = WeaponFactory.updateWeaponRequestDtoWithoutRequiredStrength();
 
@@ -601,6 +757,8 @@ class WeaponResourceIntegrationTest {
 
         assertThat(weapon.getDamage()).isNotEqualTo(requestDto.getDamage());
         assertThat(weapon.getWeaponType().name()).isNotEqualTo(requestDto.getWeaponType());
+        assertThat(weapon.getName()).isNotEqualTo(requestDto.getName());
+        assertThat(weapon.getDescription()).isNotEqualTo(requestDto.getDescription());
         assertThat(weapon.getRarity().name()).isNotEqualTo(requestDto.getRarity());
         assertThat(weapon.getRequiredAgility()).isNotEqualTo(requestDto.getRequiredAgility());
         assertThat(weapon.getRequiredIntelligence()).isNotEqualTo(requestDto.getRequiredIntelligence());
@@ -609,8 +767,7 @@ class WeaponResourceIntegrationTest {
     }
 
     @Test
-    @SneakyThrows
-    void updateWeapon_shouldRespondWithBadRequestStatus_whenBonusIdsIsNull() {
+    void updateWeapon_shouldRespondWithBadRequestStatus_whenBonusIdsIsNull() throws Exception {
         Weapon weapon = weaponRepository.save(WeaponFactory.weaponInstance());
         WeaponRequestDto requestDto = WeaponFactory.updateWeaponRequestDtoWithoutBonusIds();
 
@@ -623,6 +780,8 @@ class WeaponResourceIntegrationTest {
 
         assertThat(weapon.getDamage()).isNotEqualTo(requestDto.getDamage());
         assertThat(weapon.getWeaponType().name()).isNotEqualTo(requestDto.getWeaponType());
+        assertThat(weapon.getName()).isNotEqualTo(requestDto.getName());
+        assertThat(weapon.getDescription()).isNotEqualTo(requestDto.getDescription());
         assertThat(weapon.getRarity().name()).isNotEqualTo(requestDto.getRarity());
         assertThat(weapon.getRequiredAgility()).isNotEqualTo(requestDto.getRequiredAgility());
         assertThat(weapon.getRequiredIntelligence()).isNotEqualTo(requestDto.getRequiredIntelligence());
@@ -631,8 +790,7 @@ class WeaponResourceIntegrationTest {
     }
 
     @Test
-    @SneakyThrows
-    void deleteWeapon_shouldDeleteWeapon_whenIdIsCorrect() {
+    void deleteWeapon_shouldDeleteWeapon_whenIdIsCorrect() throws Exception {
         Weapon weapon = weaponRepository.save(WeaponFactory.weaponInstance());
 
         mockMvc.perform(delete(buildDeleteWeaponByIdUrl(weapon.getId())))
@@ -642,8 +800,7 @@ class WeaponResourceIntegrationTest {
     }
 
     @Test
-    @SneakyThrows
-    void deleteWeapon_shouldDeleteWeaponRelatedToExistingBonus_whenIdIsCorrect() {
+    void deleteWeapon_shouldDeleteWeaponRelatedToExistingBonus_whenIdIsCorrect() throws Exception {
         Bonus bonus = bonusRepository.save(BonusFactory.bonusInstance());
         Weapon weapon = weaponRepository.save(WeaponFactory.weaponInstance(List.of(bonus)));
 

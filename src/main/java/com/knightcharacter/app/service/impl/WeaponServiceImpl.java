@@ -28,8 +28,7 @@ public class WeaponServiceImpl implements WeaponService {
     }
 
     private List<BonusVO> fetchBonusesForWeapon(WeaponVO weaponVO) {
-        return weaponVO.getBonuses()
-            .stream()
+        return weaponVO.getBonuses().stream()
             .map(BonusVO::getId)
             .map(bonusService::findById)
             .collect(Collectors.toList());
@@ -52,6 +51,8 @@ public class WeaponServiceImpl implements WeaponService {
 
         weaponVO.setDamage(changedWeaponVO.getDamage());
         weaponVO.setWeaponType(changedWeaponVO.getWeaponType());
+        weaponVO.setName(changedWeaponVO.getName());
+        weaponVO.setDescription(changedWeaponVO.getDescription());
         weaponVO.setRarity(changedWeaponVO.getRarity());
         weaponVO.setRequiredAgility(changedWeaponVO.getRequiredAgility());
         weaponVO.setRequiredIntelligence(changedWeaponVO.getRequiredIntelligence());
