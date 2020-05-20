@@ -349,8 +349,8 @@ class WeaponResourceIntegrationTest {
             .andExpect(jsonPath(buildJsonPathToRequiredIntelligenceInListByIndex(0))
                 .value(firstWeapon.getRequiredIntelligence()))
             .andExpect(jsonPath(buildJsonPathToRequiredLevelInListByIndex(0)).value(firstWeapon.getRequiredLevel()))
-            .andExpect(
-                jsonPath(buildJsonPathToRequiredStrengthInListByIndex(0)).value(firstWeapon.getRequiredStrength()))
+            .andExpect(jsonPath(buildJsonPathToRequiredStrengthInListByIndex(0))
+                .value(firstWeapon.getRequiredStrength()))
             .andExpect(jsonPath(buildJsonPathToBonusesInListByIndex(0)).exists())
             .andExpect(jsonPath(buildJsonPathToIdInBonusListNestedInSkillListByIndexes(0, 0)).value(bonus.getId()))
             .andExpect(jsonPath(buildJsonPathToNameInBonusListNestedInSkillListByIndexes(0, 0)).value(bonus.getName()))
@@ -370,13 +370,13 @@ class WeaponResourceIntegrationTest {
             .andExpect(jsonPath(buildJsonPathToWeaponTypeInListByIndex(1)).value(secondWeapon.getWeaponType().name()))
             .andExpect(jsonPath(buildJsonPathToNameInListByIndex(1)).value(secondWeapon.getName()))
             .andExpect(jsonPath(buildJsonPathToDescriptionInListByIndex(1)).value(secondWeapon.getDescription()))
-            .andExpect(
-                jsonPath(buildJsonPathToRequiredAgilityInListByIndex(1)).value(secondWeapon.getRequiredAgility()))
+            .andExpect(jsonPath(buildJsonPathToRequiredAgilityInListByIndex(1))
+                .value(secondWeapon.getRequiredAgility()))
             .andExpect(jsonPath(buildJsonPathToRequiredIntelligenceInListByIndex(1))
                 .value(secondWeapon.getRequiredIntelligence()))
             .andExpect(jsonPath(buildJsonPathToRequiredLevelInListByIndex(1)).value(secondWeapon.getRequiredLevel()))
-            .andExpect(
-                jsonPath(buildJsonPathToRequiredStrengthInListByIndex(1)).value(secondWeapon.getRequiredStrength()))
+            .andExpect(jsonPath(buildJsonPathToRequiredStrengthInListByIndex(1))
+                .value(secondWeapon.getRequiredStrength()))
             .andExpect(jsonPath(buildJsonPathToBonusesInListByIndex(1)).exists())
             .andExpect(jsonPath(buildJsonPathToIdInBonusListNestedInSkillListByIndexes(1, 0)).value(bonus.getId()))
             .andExpect(jsonPath(buildJsonPathToNameInBonusListNestedInSkillListByIndexes(1, 0)).value(bonus.getName()))
@@ -448,10 +448,10 @@ class WeaponResourceIntegrationTest {
             .andExpect(jsonPath(buildJsonPathToNameInBonusListByIndex(0)).value(secondBonus.getName()))
             .andExpect(jsonPath(buildJsonPathToRarityInBonusListByIndex(0)).value(secondBonus.getRarity().toString()))
             .andExpect(jsonPath(buildJsonPathToDamageBoostInBonusListByIndex(0)).value(secondBonus.getDamageBoost()))
-            .andExpect(
-                jsonPath(buildJsonPathToCritChanceBoostInBonusListByIndex(0)).value(secondBonus.getCritChanceBoost()))
-            .andExpect(
-                jsonPath(buildJsonPathToCritDamageBoostInBonusListByIndex(0)).value(secondBonus.getCritDamageBoost()))
+            .andExpect(jsonPath(buildJsonPathToCritChanceBoostInBonusListByIndex(0))
+                .value(secondBonus.getCritChanceBoost()))
+            .andExpect(jsonPath(buildJsonPathToCritDamageBoostInBonusListByIndex(0))
+                .value(secondBonus.getCritDamageBoost()))
             .andExpect(jsonPath(buildJsonPathToSkillBoostInBonusListByIndex(0)).value(secondBonus.getSkillBoost()));
 
         Weapon updatedWeapon = weaponRepository.findById(weapon.getId()).get();
@@ -629,7 +629,7 @@ class WeaponResourceIntegrationTest {
     }
 
     @Test
-    void updateWeapon_shouldRespondWithBadRequestStatus_whenWeaponDescriptionIsNull() throws Exception {
+    void updateWeapon_shouldRespondWithBadRequestStatus_whenDescriptionIsNull() throws Exception {
         Weapon weapon = weaponRepository.save(WeaponFactory.weaponInstance());
         WeaponRequestDto requestDto = WeaponFactory.updateWeaponRequestDtoWithoutDescription();
 
