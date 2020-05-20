@@ -1,6 +1,7 @@
 package com.knightcharacter.app.rest.request;
 
-import com.knightcharacter.app.validation.annotation.ValidRarity;
+import com.knightcharacter.app.gateway.privatedb.representation.enums.Rarity;
+import com.knightcharacter.app.validation.annotation.ValidEnumValue;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -19,7 +20,7 @@ public class BonusRequestDto {
     @NotBlank
     private String name;
 
-    @ValidRarity
+    @ValidEnumValue(enumClass = Rarity.class)
     private String rarity;
 
     @NotNull

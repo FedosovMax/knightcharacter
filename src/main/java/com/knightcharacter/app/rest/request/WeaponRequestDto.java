@@ -1,6 +1,7 @@
 package com.knightcharacter.app.rest.request;
 
-import com.knightcharacter.app.validation.annotation.ValidWeaponType;
+import com.knightcharacter.app.gateway.privatedb.representation.enums.WeaponType;
+import com.knightcharacter.app.validation.annotation.ValidEnumValue;
 
 import javax.validation.constraints.NotNull;
 
@@ -17,7 +18,7 @@ import lombok.experimental.SuperBuilder;
 @EqualsAndHashCode(callSuper = true)
 public class WeaponRequestDto extends ItemRequestDto {
 
-    @ValidWeaponType
+    @ValidEnumValue(enumClass = WeaponType.class)
     private String weaponType;
 
     @NotNull

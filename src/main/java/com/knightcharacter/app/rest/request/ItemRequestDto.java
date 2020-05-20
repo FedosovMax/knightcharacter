@@ -1,6 +1,7 @@
 package com.knightcharacter.app.rest.request;
 
-import com.knightcharacter.app.validation.annotation.ValidRarity;
+import com.knightcharacter.app.gateway.privatedb.representation.enums.Rarity;
+import com.knightcharacter.app.validation.annotation.ValidEnumValue;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +38,7 @@ public abstract class ItemRequestDto {
     @NotNull
     private Integer requiredIntelligence;
 
-    @ValidRarity
+    @ValidEnumValue(enumClass = Rarity.class)
     private String rarity;
 
     @NotNull

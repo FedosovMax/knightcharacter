@@ -3,7 +3,7 @@ package com.knightcharacter.app.validation.annotation;
 import static java.lang.annotation.ElementType.FIELD;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
-import com.knightcharacter.app.validation.validator.WeaponTypeValidator;
+import com.knightcharacter.app.validation.validator.EnumValueValidator;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
@@ -15,8 +15,10 @@ import javax.validation.Payload;
 @Target(FIELD)
 @Retention(RUNTIME)
 @Documented
-@Constraint(validatedBy = WeaponTypeValidator.class)
-public @interface ValidWeaponType {
+@Constraint(validatedBy = EnumValueValidator.class)
+public @interface ValidEnumValue {
+
+    Class<? extends Enum<?>> enumClass();
 
     String message() default "";
 
