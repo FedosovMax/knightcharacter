@@ -36,7 +36,7 @@ import com.knightcharacter.app.gateway.privatedb.repository.BonusRepository;
 import com.knightcharacter.app.gateway.privatedb.representation.Bonus;
 import com.knightcharacter.app.rest.request.BonusRequestDto;
 
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,8 +58,8 @@ class BonusResourceIntegrationTest {
     @Autowired
     private BonusRepository bonusRepository;
 
-    @BeforeEach
-    void setUp() {
+    @AfterEach
+    void tearDown() {
         bonusRepository.deleteAll();
     }
 
