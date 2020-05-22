@@ -1,9 +1,15 @@
 package com.knightcharacter.app;
 
+import static com.knightcharacter.app.Constants.API_BASE_ARMORS;
 import static com.knightcharacter.app.Constants.API_BASE_BONUSES;
+import static com.knightcharacter.app.Constants.API_BASE_ITEMS;
 import static com.knightcharacter.app.Constants.API_BASE_SKILLS;
+import static com.knightcharacter.app.Constants.API_BASE_WEAPONS;
 import static com.knightcharacter.app.Constants.BASE_CHARACTER;
 
+import lombok.experimental.UtilityClass;
+
+@UtilityClass
 public class TestConstants {
 
     public static final String JSON_ROOT = "$.";
@@ -20,6 +26,14 @@ public class TestConstants {
     public static final String PARAMETER_TODOID = "todoId";
     public static final String PARAMETER_DESCRIPTION = "description";
     public static final String PARAMETER_BONUSES = "bonuses";
+    public static final String PARAMETER_DAMAGE = "damage";
+    public static final String PARAMETER_WEAPON_TYPE = "weaponType";
+    public static final String PARAMETER_REQUIRED_AGILITY = "requiredAgility";
+    public static final String PARAMETER_REQUIRED_INTELLIGENCE = "requiredIntelligence";
+    public static final String PARAMETER_REQUIRED_LEVEL = "requiredLevel";
+    public static final String PARAMETER_REQUIRED_STRENGTH = "requiredStrength";
+    public static final String PARAMETER_DEFENCE = "defence";
+    public static final String PARAMETER_ARMOR_TYPE = "armorType";
 
     public static final Integer HARD_SCARY_EXPERIENCE_AMOUNT = 13;
 
@@ -57,6 +71,30 @@ public class TestConstants {
 
     public static String buildDeleteSkillByIdUrl(String skillId) {
         return API_BASE_SKILLS + "/" + skillId;
+    }
+
+    public static String buildGetWeaponByIdUrl(String weaponId) {
+        return API_BASE_ITEMS + API_BASE_WEAPONS + "/" + weaponId;
+    }
+
+    public static String buildPutWeaponByIdUrl(String weaponId) {
+        return API_BASE_ITEMS + API_BASE_WEAPONS + "/" + weaponId;
+    }
+
+    public static String buildDeleteWeaponByIdUrl(String weaponId) {
+        return API_BASE_ITEMS + API_BASE_WEAPONS + "/" + weaponId;
+    }
+
+    public static String buildGetArmorByIdUrl(String armorId) {
+        return API_BASE_ITEMS + API_BASE_ARMORS + "/" + armorId;
+    }
+
+    public static String buildPutArmorByIdUrl(String armorId) {
+        return API_BASE_ITEMS + API_BASE_ARMORS + "/" + armorId;
+    }
+
+    public static String buildDeleteArmorByIdUrl(String armorId) {
+        return API_BASE_ITEMS + API_BASE_ARMORS + "/" + armorId;
     }
 
     public static String buildJsonPathToId() {
@@ -205,5 +243,69 @@ public class TestConstants {
         int bonusIndex) {
         return JSON_ROOT + "[" + skillIndex + "]." + PARAMETER_BONUSES + "[" + bonusIndex + "]."
             + PARAMETER_SKILL_BOOST;
+    }
+
+    public static String buildJsonPathToDamage() {
+        return JSON_ROOT + PARAMETER_DAMAGE;
+    }
+
+    public static String buildJsonPathToWeaponType() {
+        return JSON_ROOT + PARAMETER_WEAPON_TYPE;
+    }
+
+    public static String buildJsonPathToRequiredAgility() {
+        return JSON_ROOT + PARAMETER_REQUIRED_AGILITY;
+    }
+
+    public static String buildJsonPathToRequiredIntelligence() {
+        return JSON_ROOT + PARAMETER_REQUIRED_INTELLIGENCE;
+    }
+
+    public static String buildJsonPathToRequiredLevel() {
+        return JSON_ROOT + PARAMETER_REQUIRED_LEVEL;
+    }
+
+    public static String buildJsonPathToRequiredStrength() {
+        return JSON_ROOT + PARAMETER_REQUIRED_STRENGTH;
+    }
+
+    public static String buildJsonPathToDamageInListByIndex(int index) {
+        return JSON_ROOT + "[" + index + "]." + PARAMETER_DAMAGE;
+    }
+
+    public static String buildJsonPathToWeaponTypeInListByIndex(int index) {
+        return JSON_ROOT + "[" + index + "]." + PARAMETER_WEAPON_TYPE;
+    }
+
+    public static String buildJsonPathToRequiredAgilityInListByIndex(int index) {
+        return JSON_ROOT + "[" + index + "]." + PARAMETER_REQUIRED_AGILITY;
+    }
+
+    public static String buildJsonPathToRequiredIntelligenceInListByIndex(int index) {
+        return JSON_ROOT + "[" + index + "]." + PARAMETER_REQUIRED_INTELLIGENCE;
+    }
+
+    public static String buildJsonPathToRequiredLevelInListByIndex(int index) {
+        return JSON_ROOT + "[" + index + "]." + PARAMETER_REQUIRED_LEVEL;
+    }
+
+    public static String buildJsonPathToRequiredStrengthInListByIndex(int index) {
+        return JSON_ROOT + "[" + index + "]." + PARAMETER_REQUIRED_STRENGTH;
+    }
+
+    public static String buildJsonPathToDefence() {
+        return JSON_ROOT + PARAMETER_DEFENCE;
+    }
+
+    public static String buildJsonPathToArmorType() {
+        return JSON_ROOT + PARAMETER_ARMOR_TYPE;
+    }
+
+    public static String buildJsonPathToDefenceInListByIndex(int index) {
+        return JSON_ROOT + "[" + index + "]." + PARAMETER_DEFENCE;
+    }
+
+    public static String buildJsonPathToArmorTypeInListByIndex(int index) {
+        return JSON_ROOT + "[" + index + "]." + PARAMETER_ARMOR_TYPE;
     }
 }

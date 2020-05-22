@@ -1,7 +1,6 @@
 package com.knightcharacter.app.validation.validator;
 
-import com.knightcharacter.app.gateway.privatedb.representation.enums.Rarity;
-import com.knightcharacter.app.validation.annotation.ValidRarity;
+import com.knightcharacter.app.validation.annotation.ValidEnumValue;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -10,15 +9,17 @@ import java.util.stream.Stream;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
-public class RarityValidator implements ConstraintValidator<ValidRarity, CharSequence> {
+public class EnumValueValidator implements ConstraintValidator<ValidEnumValue, CharSequence> {
 
     private List<String> acceptedValues;
     private String message;
 
     @Override
-    public void initialize(ValidRarity annotation) {
-        acceptedValues = Stream.of(Rarity.values()).map(Rarity::name).collect(Collectors.toList());
-        message = String.format("Rarity is not valid. It should be one of values : %s",
+    public void initialize(ValidEnumValue annotation) {
+        acceptedValues = Stream.of(annotation.enumClass().getEnumConstants())
+            .map(Enum::name)
+            .collect(Collectors.toList());
+        message = String.format("Value is not valid. It should be one of values : %s",
             String.join("|", acceptedValues));
     }
 
