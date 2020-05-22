@@ -24,7 +24,7 @@ import com.knightcharacter.app.gateway.privatedb.repository.CharacterRepository;
 import com.knightcharacter.app.gateway.privatedb.representation.Character;
 import com.knightcharacter.app.rest.request.CharacterRequestDto;
 
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,8 +46,8 @@ public class CharacterResourceIntegrationTest {
     @Autowired
     private CharacterRepository characterRepository;
 
-    @BeforeEach
-    public void setUp() {
+    @AfterEach
+    public void tearDown() {
         characterRepository.deleteAll();
     }
 
