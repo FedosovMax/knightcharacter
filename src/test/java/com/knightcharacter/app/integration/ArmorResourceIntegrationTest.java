@@ -329,7 +329,7 @@ class ArmorResourceIntegrationTest {
     }
 
     @Test
-    void getAllArmors_shouldReturnAllArmorResponseDtos() throws Exception {
+    void findAllArmors_shouldReturnAllArmorResponseDtos() throws Exception {
         Bonus bonus = bonusRepository.save(BonusFactory.bonusInstance());
         Armor firstArmor = armorRepository.save(ArmorFactory.armorInstance(List.of(bonus)));
         Armor secondArmor = armorRepository.save(ArmorFactory.armorInstance(List.of(bonus)));
@@ -390,7 +390,7 @@ class ArmorResourceIntegrationTest {
     }
 
     @Test
-    void getArmorById_shouldReturnArmorResponseDto_whenIdIsCorrect() throws Exception {
+    void findArmorById_shouldReturnArmorResponseDto_whenIdIsCorrect() throws Exception {
         Bonus bonus = bonusRepository.save(BonusFactory.bonusInstance());
         Armor armor = armorRepository.save(ArmorFactory.armorInstance(List.of(bonus)));
 

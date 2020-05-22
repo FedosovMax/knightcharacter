@@ -28,8 +28,8 @@ public class ItemResource {
     private final ItemRestMapper itemRestMapper;
 
     @GetMapping
-    public ResponseEntity<List<ItemResponseDto>> getAllItems() {
-        log.info("Request to get all items");
+    public ResponseEntity<List<ItemResponseDto>> findAllItems() {
+        log.info("Request to find all items");
         return ResponseEntity.status(HttpStatus.FOUND)
             .body(itemService.findAll().stream().map(itemRestMapper::toItemVO).collect(Collectors.toList()));
     }

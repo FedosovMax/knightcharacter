@@ -46,8 +46,8 @@ public class WeaponResource {
     }
 
     @GetMapping
-    public ResponseEntity<List<WeaponResponseDto>> getAllWeapons() {
-        log.info("Request to get all weapons");
+    public ResponseEntity<List<WeaponResponseDto>> findAllWeapons() {
+        log.info("Request to find all weapons");
         return ResponseEntity.status(HttpStatus.FOUND)
             .body(weaponService.findAll().stream()
                 .map(weaponRestMapper::toWeaponResponseDto)
@@ -55,8 +55,8 @@ public class WeaponResource {
     }
 
     @GetMapping("/{weaponId}")
-    public ResponseEntity<WeaponResponseDto> getWeaponById(@PathVariable String weaponId) {
-        log.info("Request to get weapon by id : {}", weaponId);
+    public ResponseEntity<WeaponResponseDto> findWeaponById(@PathVariable String weaponId) {
+        log.info("Request to find weapon by id : {}", weaponId);
         WeaponVO weaponVO = weaponService.findById(weaponId);
         return ResponseEntity.status(HttpStatus.FOUND).body(weaponRestMapper.toWeaponResponseDto(weaponVO));
     }

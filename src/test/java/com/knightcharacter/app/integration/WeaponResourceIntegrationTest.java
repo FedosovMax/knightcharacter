@@ -331,7 +331,7 @@ class WeaponResourceIntegrationTest {
     }
 
     @Test
-    void getAllWeapons_shouldReturnAllWeaponResponseDtos() throws Exception {
+    void findAllWeapons_shouldReturnAllWeaponResponseDtos() throws Exception {
         Bonus bonus = bonusRepository.save(BonusFactory.bonusInstance());
         Weapon firstWeapon = weaponRepository.save(WeaponFactory.weaponInstance(List.of(bonus)));
         Weapon secondWeapon = weaponRepository.save(WeaponFactory.weaponInstance(List.of(bonus)));
@@ -393,7 +393,7 @@ class WeaponResourceIntegrationTest {
     }
 
     @Test
-    void getWeaponById_shouldReturnWeaponResponseDto_whenIdIsCorrect() throws Exception {
+    void findWeaponById_shouldReturnWeaponResponseDto_whenIdIsCorrect() throws Exception {
         Bonus bonus = bonusRepository.save(BonusFactory.bonusInstance());
         Weapon weapon = weaponRepository.save(WeaponFactory.weaponInstance(List.of(bonus)));
 

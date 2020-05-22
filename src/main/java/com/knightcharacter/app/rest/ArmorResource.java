@@ -46,8 +46,8 @@ public class ArmorResource {
     }
 
     @GetMapping
-    public ResponseEntity<List<ArmorResponseDto>> getAllArmors() {
-        log.info("Request to get all armors");
+    public ResponseEntity<List<ArmorResponseDto>> findAllArmors() {
+        log.info("Request to find all armors");
         return ResponseEntity.status(HttpStatus.FOUND)
             .body(armorService.findAll().stream()
                 .map(armorRestMapper::toArmorResponseDto)
@@ -55,8 +55,8 @@ public class ArmorResource {
     }
 
     @GetMapping("/{armorId}")
-    public ResponseEntity<ArmorResponseDto> getArmorById(@PathVariable String armorId) {
-        log.info("Request to get armor by id : {}", armorId);
+    public ResponseEntity<ArmorResponseDto> findArmorById(@PathVariable String armorId) {
+        log.info("Request to find armor by id : {}", armorId);
         ArmorVO armorVO = armorService.findById(armorId);
         return ResponseEntity.status(HttpStatus.FOUND).body(armorRestMapper.toArmorResponseDto(armorVO));
     }

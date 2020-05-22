@@ -75,7 +75,7 @@ class ItemResourceIntegrationTest {
     }
 
     @Test
-    void getAllItems_shouldReturnAllItemResponseInheritorDtos() throws Exception {
+    void findAllItems_shouldReturnAllItemResponseInheritorDtos() throws Exception {
         Bonus bonus = bonusRepository.save(BonusFactory.bonusInstance());
         Armor armor = armorRepository.save(ArmorFactory.armorInstance(List.of(bonus)));
         Weapon weapon = weaponRepository.save(WeaponFactory.weaponInstance(List.of(bonus)));
